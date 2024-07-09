@@ -1,35 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { Component } from 'react';
+import Search from './components/Search';
+import Results from './components/Results';
+import ErrorBoundary from './components/ErrorBoundary';
+import './App.css';
+import { AppState, Pokemon } from './types';
 
-function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+class App extends Component<{}, AppState> {
+    constructor(props: {}) {
+        super(props);
+        this.state = {
+            results: [],
+            loading: false,
+        };
+    }
+
+    componentDidMount() {
+        this.fetchData(localStorage.getItem('searchTerm') || '');
+    }
+
+    fetchData = (term: string) => {
+        this.setState({ loading: true });
+        const apiUrl = term
+            ? `https://pokeapi.co/api/v2/pokemon?limit=10&offset=0&search=${term}`
+            : 'https://pokeapi.co/api/v2/pokemon?limit=10&offset=0';
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const results = data.results.map((item: Pokemon) => ({
+                    name: item.name,
+                    description: item.url,
+                }));
+                this.setState({ results, loading: false });
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+                this.setState({ loading: false });
+            });
+    };
+
+    handleSearch = (term: string) => {
+        this.fetchData(term);
+    };
+
+    throwError = () => {
+        throw new Error('Test error');
+    };
+
+    render() {
+        const { results, loading } = this.state;
+
+        return (
+            <ErrorBoundary>
+                <div className="app-container">
+                    <div className="top-section">
+                        <Search onSearch={this.handleSearch} onThrowError={this.throwError} />
+                    </div>
+                    <div className="bottom-section">
+                        {loading ? <p>Loading...</p> : <Results results={results} />}
+                    </div>
+                </div>
+            </ErrorBoundary>
+        );
+    }
 }
 
-export default App
+export default App;
