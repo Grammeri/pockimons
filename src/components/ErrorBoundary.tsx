@@ -4,7 +4,7 @@ import { ErrorProps } from '../types.ts';
 class ErrorState {
 }
 
-class ErrorBoundary extends Component<ErrorProps, ErrorState> {
+export class ErrorBoundary extends Component<ErrorProps, ErrorState> {
     constructor(props: ErrorProps) {
         super(props);
         this.state = { hasError: false };
@@ -27,4 +27,3 @@ class ErrorBoundary extends Component<ErrorProps, ErrorState> {
     }
 }
 
-export default ErrorBoundary;
