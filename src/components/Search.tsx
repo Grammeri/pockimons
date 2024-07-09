@@ -1,35 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { SearchProps } from '../types.ts';
+import React from 'react';
+import { SearchProps } from '../types';
 
-const Search = ({ onSearch, onThrowError }: SearchProps) => {
-    const [searchTerm, setSearchTerm] = useState<string>('');
+export const Search: React.FC<SearchProps> = ({ onSearch, onThrowError }) => {
+  const [searchTerm, setSearchTerm] = React.useState(localStorage.getItem('searchTerm') || '');
 
-    useEffect(() => {
-        const savedSearchTerm = localStorage.getItem('searchTerm') || '';
-        setSearchTerm(savedSearchTerm);
-    }, []);
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
-    };
+  const handleSearchClick = () => {
+    const trimmedTerm = searchTerm.trim();
+    localStorage.setItem('searchTerm', trimmedTerm);
+    onSearch(trimmedTerm);
+  };
 
-    const handleSearchClick = () => {
-        const trimmedTerm = searchTerm.trim();
-        localStorage.setItem('searchTerm', trimmedTerm);
-        onSearch(trimmedTerm);
-    };
+  return (
+    <div className="search-container">
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleInputChange}
+      />
+      <button onClick={handleSearchClick}>Search</button>
+      <button onClick={onThrowError}>Throw Error</button>
+    </div>
+  );
+};
 
-    return (
-      <div className="search-container">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={handleInputChange}
-          />
-          <button onClick={handleSearchClick}>Search</button>
-          <button onClick={onThrowError}>Throw Error</button>
-      </div>
-    );
-}
-
-export default Search;
