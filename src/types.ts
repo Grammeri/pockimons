@@ -1,47 +1,42 @@
-import { ReactNode } from 'react';
+// src/types.ts
 
-export type Pokemon = {
+export type CardItem = {
     name: string;
-    url: string;
+    description: string;
 };
 
-export type PokemonResponse = {
-    results: Pokemon[];
+export type CardProps = {
+    items: CardItem[];
 };
 
-export type ResultProps = {
-    results: { name: string; description: string }[];
-};
-
-export type State = {
-    hasError: boolean;
-};
-
-export type Props = {
-    results: { name: string; description: string }[];
-};
-
-export type AppState = {
-    results: { name: string; description: string }[];
-    loading: boolean;
-};
-
-export type SearchProps = {
-    onSearch: (term: string) => void;
-    onThrowError: () => void;
-};
-
-export type SearchState = {
-    searchTerm: string;
+export type CardListProps = {
+    cards: CardItem[];
 };
 
 export type ErrorProps = {
-    children: ReactNode;
+    children: React.ReactNode;
 };
 
 export type ErrorState = {
     hasError: boolean;
 };
-export type CardListProps = {
-    cards: { name: string; description: string }[];
-}
+
+export type SearchProps = {
+    onSearch: (searchTerm: string) => void;
+    onThrowError: () => void;
+};
+export type DetailedCardProps = {
+    card: CardItem | null;
+    onClose: () => void;
+};
+
+export type PaginationProps = {
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+};
+export type PaginationProps = {
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+};

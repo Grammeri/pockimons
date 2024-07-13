@@ -1,0 +1,34 @@
+.card {
+
+  cursor: pointer;
+  display: flex; /* Используем flex-контейнер */
+  flex-direction: column; /* Элементы внутри выравниваем по вертикали */
+  justify-content: center; /* Центрируем содержимое по горизонтали */
+  align-items: center; /* Центрируем содержимое по вертикали */
+  word-wrap: break-word;
+  width: auto;
+  text-align: center; /* Выравниваем текст по центру */
+}
+
+.card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-size: 1rem;
+}
+
+@media (max-width: 800px) {
+  .card {
+    width: 85%;
+  }
+}
+
+@media (max-width: 380px) {
+  .card {
+    font-size: 0.875rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+  }
+}

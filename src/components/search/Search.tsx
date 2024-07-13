@@ -1,5 +1,6 @@
 import React from 'react';
-import { SearchProps } from '../types';
+import { SearchProps } from '../../types';
+import './Search.css';
 
 export const Search: React.FC<SearchProps> = ({ onSearch, onThrowError }) => {
   const [searchTerm, setSearchTerm] = React.useState(localStorage.getItem('searchTerm') || '');
@@ -26,4 +27,3 @@ export const Search: React.FC<SearchProps> = ({ onSearch, onThrowError }) => {
     </div>
   );
 };
-

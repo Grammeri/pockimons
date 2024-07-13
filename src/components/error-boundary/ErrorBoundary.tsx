@@ -1,8 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { ErrorProps } from '../types.ts';
-
-class ErrorState {
-}
+import { ErrorProps, ErrorState } from '../../types';
 
 export class ErrorBoundary extends Component<ErrorProps, ErrorState> {
     constructor(props: ErrorProps) {
@@ -26,4 +23,3 @@ export class ErrorBoundary extends Component<ErrorProps, ErrorState> {
         return this.props.children;
     }
 }
-

@@ -1,23 +1,22 @@
-// src/components/tests/Search.test.tsx
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Search } from '../Search';
+import '@testing-library/jest-dom'; // Добавили импорт для jest-dom
+import { Search } from '../search/Search';
 
-test('renders search input', () => {
-  render(<Search onSearch={jest.fn()} onThrowError={jest.fn()} />);
-  const inputElement = screen.getByPlaceholderText(/Search/i);
-  expect(inputElement).toBeInTheDocument();
+test('saves the entered value to the local storage when clicking the Search button', () => {
+  const handleSearch = jest.fn();
+  render(<Search onSearch={handleSearch} onThrowError={() => {}} />);
+
+  fireEvent.change(screen.getByRole('textbox'), { target: { value: 'Pikachu' } });
+  fireEvent.click(screen.getByText('Search'));
+
+  expect(localStorage.getItem('searchTerm')).toBe('Pikachu');
+  expect(handleSearch).toHaveBeenCalledWith('Pikachu');
 });
 
-test('calls onSearch with input value when search button is clicked', () => {
-  const handleSearch = jest.fn();
-  render(<Search onSearch={handleSearch} onThrowError={jest.fn()} />);
+test('retrieves the value from the local storage upon mounting', () => {
+  localStorage.setItem('searchTerm', 'Bulbasaur');
+  render(<Search onSearch={() => {}} onThrowError={() => {}} />);
 
-  const inputElement = screen.getByPlaceholderText(/Search/i);
-  const buttonElement = screen.getByText(/Search/i);
-
-  fireEvent.change(inputElement, { target: { value: 'pikachu' } });
-  fireEvent.click(buttonElement);
-
-  expect(handleSearch).toHaveBeenCalledWith('pikachu');
+  expect(screen.getByRole('textbox')).toHaveValue('Bulbasaur');
 });

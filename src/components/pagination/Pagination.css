@@ -1,0 +1,33 @@
+/* src/components/Pagination.css */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.pagination-button,
+.pagination-arrow {
+  padding: 0.5rem 1rem;
+  margin: 0.25rem;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+}
+
+.pagination-button.active {
+  font-weight: bold;
+  background-color: #eee;
+}
+
+.pagination-arrow {
+  font-size: 1.25rem;
+}
+
+.pagination-button:disabled,
+.pagination-arrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

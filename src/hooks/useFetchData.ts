@@ -1,45 +1,57 @@
 import { useState, useEffect } from 'react';
-import { Pokemon } from '../types';
+import { CardItem } from '../types';
 
 export const useFetchData = () => {
-  const [results, setResults] = useState<{ name: string; description: string }[]>([]);
+  const [results, setResults] = useState<CardItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
-  const fetchData = (term: string) => {
+  const fetchData = async (page: number) => {
     setLoading(true);
-    const apiUrl = term
-      ? `https://pokeapi.co/api/v2/pokemon?limit=10&offset=0&search=${term}`
-      : 'https://pokeapi.co/api/v2/pokemon?limit=10&offset=0';
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        const results = data.results.map((item: Pokemon) => ({
-          name: item.name,
-          description: item.url,
-        }));
-        setResults(results);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      });
+    setError(null);
+    try {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${(page - 1) * 10}`);
+      const data = await response.json();
+      const items = data.results.map((item: any) => ({
+        name: item.name,
+        description: item.url,
+      }));
+      setResults(items);
+      setTotalPages(Math.ceil(data.count / 10));
+    } catch (error) {
+      setError('Failed to fetch data');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleSearch = (term: string) => {
-    const trimmedTerm = term.trim();
-    localStorage.setItem('searchTerm', trimmedTerm);
-    fetchData(trimmedTerm);
+  useEffect(() => {
+    fetchData(currentPage);
+  }, [currentPage]);
+
+  const handleSearch = (searchTerm: string) => {
+    setCurrentPage(1);
+    fetchData(1); // Обновление данных при поиске
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   const throwError = () => {
     throw new Error('Test error');
   };
 
-  useEffect(() => {
-    const savedSearchTerm = localStorage.getItem('searchTerm') || '';
-    fetchData(savedSearchTerm);
-  }, []);
-
-  return { results, loading, handleSearch, throwError };
+  return {
+    results,
+    loading,
+    error,
+    currentPage,
+    totalPages,
+    handleSearch,
+    handlePageChange,
+    throwError,
+  };
 };
