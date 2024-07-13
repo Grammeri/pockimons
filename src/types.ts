@@ -42,3 +42,6 @@ export type ErrorProps = {
 export type ErrorState = {
     hasError: boolean;
 };
+export type CardListProps = {
+    cards: { name: string; description: string }[];
+}

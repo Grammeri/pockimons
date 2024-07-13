@@ -2,7 +2,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Search } from './components/Search';
-import { Results} from './components/Results';
+import { Card } from './components/Card';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import './App.css';
 import { useFetchData } from './hooks/useFetchData';
@@ -17,7 +17,7 @@ const App = ():React.ReactNode => {
           <Search onSearch={handleSearch} onThrowError={throwError} />
         </div>
         <div className="bottom-section">
-          {loading ? <p>Loading...</p> : <Results results={results} />}
+          {loading ? <p>Loading...</p> : <Card results={results} />}
         </div>
         <Outlet />
       </div>

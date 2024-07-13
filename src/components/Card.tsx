@@ -1,7 +1,7 @@
 import React from 'react';
 import { Props } from '../types.ts';
 
-export const Results = ({ results }: Props) => {
+export const Card = ({ results }: Props) => {
     return (
       <div className="results-container">
           {results.map((result, index) => (
