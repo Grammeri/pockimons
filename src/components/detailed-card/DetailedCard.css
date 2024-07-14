@@ -6,35 +6,38 @@
   align-items: center;
   border: 1px solid #ccc;
   padding: 1.25rem;
-  background-color: white;
-  width: 30%;
-  height: 50%;
-  margin-top: 1rem;
   background-color: orange;
+  width: 30%;
+  margin-top: 1rem;
+  box-sizing: border-box;
 }
 
 .detailed-card button {
   margin-top: 0.625rem;
   align-self: flex-start;
   border-radius: 0.25rem;
-  background-color:lightgray;
+  background-color: lightgray;
   padding: 0.5rem;
- color: red;
+  color: red;
 }
 
 .detailed-card button:hover {
   background-color: white;
 }
 
-
 .detailed-card img {
   max-width: 100%;
   height: auto;
 }
 
+.detailed-card p {
+  word-wrap: break-word;
+  max-width: 100%;
+  text-align: justify;
+}
+
 @media (max-width: 800px) {
   .detailed-card {
-    position: static;
     width: 85%;
     padding: 0.625rem;
     margin-top: 1.25rem;
@@ -43,7 +46,6 @@
 
 @media (max-width: 380px) {
   .detailed-card {
-    position: static;
     width: 100%;
     padding: 0.625rem;
     margin-top: 1.25rem;

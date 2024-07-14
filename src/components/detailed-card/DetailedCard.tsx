@@ -13,11 +13,14 @@ export const DetailedCard: React.FC<DetailedCardProps> = ({ card, onClose }) => 
 
   useEffect(() => {
     if (card) {
+      setLoading(true);
       fetch(`https://pokeapi.co/api/v2/pokemon/${card.name.toLowerCase()}`)
         .then(response => response.json())
         .then(data => {
-          setImageUrl(data.sprites.front_default);
-          setLoading(false);
+          setTimeout(() => {  // Добавляем задержку
+            setImageUrl(data.sprites.front_default);
+            setLoading(false);
+          }, 500); // Задержка в 500 мс
         })
         .catch(error => {
           console.error('Error fetching image:', error);

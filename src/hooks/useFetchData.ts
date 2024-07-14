@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CardItem } from '../types';
+import { ApiResult, CardItem } from '../types';
 
 export const useFetchData = () => {
   const [results, setResults] = useState<CardItem[]>([]);
@@ -14,7 +14,7 @@ export const useFetchData = () => {
     try {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${(page - 1) * 10}`);
       const data = await response.json();
-      const items = data.results.map((item: any) => ({
+      const items = data.results.map((item: ApiResult) => ({
         name: item.name,
         description: item.url,
       }));

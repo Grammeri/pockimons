@@ -29,4 +29,13 @@ export type PaginationProps = {
     totalPages: number;
     onPageChange: (page: number) => void;
 };
-
+export type ApiResponse = {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: ApiResult[];
+};
+export type ApiResult = {
+    name: string;
+    url: string;
+};
