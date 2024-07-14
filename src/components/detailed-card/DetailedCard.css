@@ -22,7 +22,7 @@
  color: red;
 }
 
-.detailed-card button:hover { /* Удалите пробел между button и :hover */
+.detailed-card button:hover {
   background-color: white;
 }
 

@@ -33,7 +33,7 @@ export const useFetchData = () => {
 
   const handleSearch = () => {
     setCurrentPage(1);
-    fetchData(1); // Обновление данных при поиске
+    fetchData(1);
   };
 
   const handlePageChange = (page: number) => {

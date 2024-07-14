@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom'; // Добавили импорт для jest-dom
+import '@testing-library/jest-dom';
 import { Search } from '../search/Search';
 
 test('saves the entered value to the local storage when clicking the Search button', () => {

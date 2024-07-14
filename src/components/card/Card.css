@@ -1,13 +1,13 @@
 .card {
 
   cursor: pointer;
-  display: flex; /* Используем flex-контейнер */
-  flex-direction: column; /* Элементы внутри выравниваем по вертикали */
-  justify-content: center; /* Центрируем содержимое по горизонтали */
-  align-items: center; /* Центрируем содержимое по вертикали */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   word-wrap: break-word;
   width: auto;
-  text-align: center; /* Выравниваем текст по центру */
+  text-align: center;
 }
 
 .card h3 {

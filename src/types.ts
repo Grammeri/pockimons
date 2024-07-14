@@ -1,5 +1,3 @@
-// src/types.ts
-
 export type CardItem = {
     name: string;
     description: string;
