@@ -1,9 +1,9 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Pagination } from '../pagination/Pagination';
-import { PaginationProps } from '../../types';
-import { MemoryRouter, Routes, Route, Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
+import {fireEvent, render, screen} from '@testing-library/react';
+import {Pagination} from '../pagination/Pagination';
+import {PaginationProps} from '../../types';
+import {Route, Router, Routes} from 'react-router-dom';
+import {createMemoryHistory} from 'history';
 
 const renderPagination = (props: Partial<PaginationProps> = {}) => {
   const defaultProps: PaginationProps = {

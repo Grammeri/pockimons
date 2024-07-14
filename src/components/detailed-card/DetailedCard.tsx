@@ -17,10 +17,10 @@ export const DetailedCard: React.FC<DetailedCardProps> = ({ card, onClose }) => 
       fetch(`https://pokeapi.co/api/v2/pokemon/${card.name.toLowerCase()}`)
         .then(response => response.json())
         .then(data => {
-          setTimeout(() => {  // Добавляем задержку
+          setTimeout(() => {
             setImageUrl(data.sprites.front_default);
             setLoading(false);
-          }, 500); // Задержка в 500 мс
+          }, 500);
         })
         .catch(error => {
           console.error('Error fetching image:', error);

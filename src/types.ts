@@ -2,11 +2,6 @@ export type CardItem = {
     name: string;
     description: string;
 };
-
-export type CardProps = {
-    items: CardItem[];
-};
-
 export type CardListProps = {
     cards: CardItem[];
     onCardClick: (card: CardItem) => void;
