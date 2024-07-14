@@ -12,7 +12,7 @@ export const CardList: React.FC<CardListProps> = ({ cards, onCardClick }) => {
     <div className="card-list">
       {cards.map((card, index) => (
         <div key={index} onClick={() => onCardClick(card)}>
-          <Card name={card.name} description={card.description} />
+          <Card name={card.name} />
         </div>
       ))}
     </div>

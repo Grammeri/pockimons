@@ -1,6 +1,6 @@
 import { Linter } from 'eslint';
 
-const config = {
+const config: Linter.Config = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2020,
@@ -19,14 +19,14 @@ const config = {
     'react',
     'react-hooks',
     'react-refresh',
-    'prettier'
+    'prettier',
   ],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
   ],
   rules: {
     'prettier/prettier': 'error',

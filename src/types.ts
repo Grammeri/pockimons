@@ -11,6 +11,7 @@ export type CardProps = {
 
 export type CardListProps = {
     cards: CardItem[];
+    onCardClick: (card: CardItem) => void;
 };
 
 export type ErrorProps = {
@@ -25,18 +26,9 @@ export type SearchProps = {
     onSearch: (searchTerm: string) => void;
     onThrowError: () => void;
 };
-export type DetailedCardProps = {
-    card: CardItem | null;
-    onClose: () => void;
+export type PaginationProps = {
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
 };
 
-export type PaginationProps = {
-    currentPage: number;
-    totalPages: number;
-    onPageChange: (page: number) => void;
-};
-export type PaginationProps = {
-    currentPage: number;
-    totalPages: number;
-    onPageChange: (page: number) => void;
-};
