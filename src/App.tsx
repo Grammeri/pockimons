@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Search } from './components/search/Search';
 import { CardList } from './components/card-list/CardList';
 import { DetailedCard } from './components/detailed-card/DetailedCard';
@@ -8,26 +8,49 @@ import { Pagination } from './components/pagination/Pagination';
 import './App.css';
 import { useFetchData } from './hooks/useFetchData';
 import { CardItem } from './types';
+import useSearchTerm from './hooks/useSearchTerm';
 
 const App = (): React.ReactNode => {
-  const { results, loading, handleSearch, throwError, currentPage, totalPages, handlePageChange } = useFetchData();
-  const [selectedCard, setSelectedCard] = React.useState<CardItem | null>(null);
-  const [allCards, setAllCards] = React.useState<CardItem[]>([]); // New state for all cards
+  const { results, loading, handleSearch, throwError, currentPage, totalPages, handlePageChange, fetchData } = useFetchData();
+  const [selectedCard, setSelectedCard] = useState<CardItem | null>(null);
+  const [searchTerms, addSearchTerm] = useSearchTerm('searchTerms');
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setAllCards(results);
-  }, [results]);
+    const params = new URLSearchParams(location.search);
+    const searchTerm = params.get('search') || '';
+    if (searchTerm) {
+      handleSearch(searchTerm);
+    } else {
+      fetchData(currentPage);
+    }
+  }, [location.search, fetchData, currentPage]);
 
   const handleCardClick = (card: CardItem) => {
-    setSelectedCard(selectedCard === card ? null : card); // Toggle detailed card display
+    setSelectedCard(selectedCard === card ? null : card);
   };
 
   const handleSearchChange = (searchTerm: string) => {
+    setSelectedCard(null);
     if (searchTerm === '') {
-      setSelectedCard(null);
-      setAllCards(results); // Reset to all cards when search term is cleared
+      fetchData(currentPage);
+      navigate({ search: '' });
+    } else if (searchTerms.includes(searchTerm)) {
+      handleSearch(searchTerm);
+      navigate({ search: `?search=${searchTerm}` });
+    } else {
+      handleSearch(searchTerm);
+      addSearchTerm(searchTerm);
+      navigate({ search: `?search=${searchTerm}` });
     }
-    handleSearch(searchTerm);
+  };
+
+  const handlePageChangeWithSearch = (page: number) => {
+    const params = new URLSearchParams(location.search);
+    const searchTerm = params.get('search') || '';
+    navigate({ search: `?page=${page}${searchTerm ? `&search=${searchTerm}` : ''}` });
+    handlePageChange(page);
   };
 
   return (
@@ -37,10 +60,10 @@ const App = (): React.ReactNode => {
             <Search onSearch={handleSearchChange} onThrowError={throwError} />
           </div>
           <div className="bottom-section">
-            {loading ? <p>Loading...</p> : <CardList cards={allCards} onCardClick={handleCardClick} />} {/* Use allCards for CardList */}
+            {loading ? <p>Loading...</p> : <CardList cards={results} onCardClick={handleCardClick} />}
             {selectedCard && <DetailedCard card={selectedCard} onClose={() => setSelectedCard(null)} />}
           </div>
-          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChangeWithSearch} />
           <Outlet />
         </div>
       </ErrorBoundary>

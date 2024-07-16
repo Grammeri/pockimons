@@ -1,29 +1,46 @@
 import React from 'react';
 import { SearchProps } from '../../types';
 import './Search.css';
+import useSearchTerm from '../../hooks/useSearchTerm';
 
 export const Search: React.FC<SearchProps> = ({ onSearch, onThrowError }) => {
-  const [searchTerm, setSearchTerm] = React.useState(localStorage.getItem('searchTerm') || '');
+    const [searchTerms, addSearchTerm] = useSearchTerm('searchTerms');
+    const [searchTerm, setSearchTerm] = React.useState<string>('');
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value);
+        console.log(`Input change: ${event.target.value}`);
+    };
 
-  const handleSearchClick = () => {
-    const trimmedTerm = searchTerm.trim();
-    localStorage.setItem('searchTerm', trimmedTerm);
-    onSearch(trimmedTerm);
-  };
+    const handleSearchClick = () => {
+        const trimmedTerm = searchTerm.trim();
+        if (trimmedTerm) {
+            if (!searchTerms.includes(trimmedTerm)) {
+                addSearchTerm(trimmedTerm);
+            }
+            console.log(`Searching for term: ${trimmedTerm}`);
+            onSearch(trimmedTerm);
+        } else {
+            onSearch('');
+        }
+    };
 
-  return (
-    <div className="search-container">
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={handleInputChange}
-      />
-      <button onClick={handleSearchClick}>Search</button>
-      <button onClick={onThrowError}>Throw Error</button>
-    </div>
-  );
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            handleSearchClick();
+        }
+    };
+
+    return (
+        <div className="search-container">
+            <input
+                type="text"
+                value={searchTerm}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+            />
+            <button onClick={handleSearchClick}>Search</button>
+            <button onClick={onThrowError}>Throw Error</button>
+        </div>
+    );
 };
