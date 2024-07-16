@@ -31,9 +31,28 @@ export const useFetchData = () => {
     fetchData(currentPage);
   }, [currentPage]);
 
-  const handleSearch = () => {
-    setCurrentPage(1);
-    fetchData(1);
+  const handleSearch = async (searchTerm: string) => {
+    if (searchTerm === '') {
+      fetchData(currentPage); // Fetch paginated data when search term is empty
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTerm.toLowerCase()}`);
+      const data = await response.json();
+      const item = {
+        name: data.name,
+        description: data.url,
+      };
+      setResults([item]);
+      setTotalPages(1);
+      setCurrentPage(1);
+    } catch (error) {
+      setError('Failed to fetch data');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handlePageChange = (page: number) => {
