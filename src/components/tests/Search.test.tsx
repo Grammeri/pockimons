@@ -1,6 +1,10 @@
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { Search } from '../search/Search';
+
+beforeEach(() => {
+  localStorage.clear();
+});
 
 test('saves the entered value to the local storage when clicking the Search button', () => {
   const handleSearch = jest.fn();

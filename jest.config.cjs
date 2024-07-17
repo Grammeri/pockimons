@@ -9,5 +9,5 @@ module.exports = {
   },
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   testEnvironment: 'jest-environment-jsdom',
+  collectCoverageFrom: ['src/**/*.{ts,tsx}'], // Добавлено для сбора покрытия для всех файлов
 };
-

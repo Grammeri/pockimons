@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for components/card-list/CardList.tsx</title>
+    <title>Code coverage report for src/hooks/useSearchTerm.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/card-list</a> CardList.tsx</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/hooks</a> useSearchTerm.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.88% </span>
-                <span class="quiet">Statements</span>
-                <span class='fraction'>8/9</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">66.66% </span>
-                <span class="quiet">Functions</span>
+                <span class="quiet">Branches</span>
                 <span class='fraction'>2/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>4/4</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
@@ -83,46 +83,55 @@
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
-import { CardListProps } from '../../types';
-import { Card } from '../card/Card';
-import './CardList.css';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState, useEffect } from 'react';
 &nbsp;
-export const CardList: React.FC&lt;CardListProps&gt; = ({ cards, onCardClick }) =&gt; {
-  if (cards.length === 0) {
-    return &lt;p&gt;No cards available&lt;/p&gt;;
-  }
+const useSearchTerm = (key: string) =&gt; {
+  const [searchTerms, setSearchTerms] = useState&lt;string[]&gt;(() =&gt; {
+    const storedTerms = localStorage.getItem(key);
+    const terms = storedTerms ? <span class="branch-0 cbranch-no" title="branch not covered" >JSON.parse(storedTerms) </span>: [];
+    return terms;
+  });
 &nbsp;
-  return (
-    &lt;div className="card-list"&gt;
-      {cards.map((card, index) =&gt; (
-        &lt;div key={index} onClick={<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >onCardClick(card)}</span>&gt;
-          &lt;Card name={card.name} /&gt;
-        &lt;/div&gt;
-      ))}
-    &lt;/div&gt;
-  );
+  useEffect(() =&gt; {
+    localStorage.setItem(key, JSON.stringify(searchTerms));
+  }, [key, searchTerms]);
+&nbsp;
+  const addSearchTerm = (term: string) =&gt; {
+    if (!searchTerms.includes(term)) {
+      setSearchTerms([...searchTerms, term]);
+    }
+  };
+&nbsp;
+  return [searchTerms, addSearchTerm] as const;
 };
+&nbsp;
+export default useSearchTerm;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -130,7 +139,7 @@ export const CardList: React.FC&lt;CardListProps&gt; = ({ cards, onCardClick }) 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-17T04:57:15.101Z
+                at 2024-07-17T05:49:26.643Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
