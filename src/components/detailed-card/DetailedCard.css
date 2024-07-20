@@ -1,6 +1,6 @@
 .detailed-card {
-  flex: 0 0 30%; /* Ширина детальной карточки */
-  margin-left: 2rem; /* Отступ слева для разделения от списка карточек */
+  flex: 0 0 30%;
+  margin-left: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;

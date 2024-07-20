@@ -1,4 +1,3 @@
-// src/services/pokemon.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CardItem } from '../types';
 

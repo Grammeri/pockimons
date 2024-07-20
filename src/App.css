@@ -1,4 +1,3 @@
-/* src/App.css */
 .app-container {
   display: flex;
   flex-direction: column;
@@ -46,8 +45,8 @@
 
 .content-wrapper {
   display: flex;
-  justify-content: space-between; /* Обеспечиваем выравнивание по горизонтали */
-  width: 80%; /* Задаем ширину, чтобы было место для обеих карточек */
+  justify-content: space-between;
+  width: 80%;
 }
 
 @media (max-width: 800px) {

@@ -1,4 +1,3 @@
-/* src/components/card-list/CardList.css */
 .card-list {
   display: flex;
   flex-wrap: wrap;
@@ -31,7 +30,8 @@
   color: white;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: pointer
+
 }
 
 .clear-button:hover {

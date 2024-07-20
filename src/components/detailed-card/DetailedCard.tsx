@@ -1,4 +1,3 @@
-// src/components/detailed-card/DetailedCard.tsx
 import React from 'react';
 import { CardItem } from '../../types';
 import { useGetPokemonByNameQuery } from '../../services/pokemon';
