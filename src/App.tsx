@@ -12,6 +12,8 @@ import { CardItem } from './types';
 import useSearchTerm from './hooks/useSearchTerm';
 import { RootState } from './store';
 import { clearItems } from './slices/selectedItemsSlice';
+import { setPageItems } from './slices/currentPageSlice';
+import { useTheme } from './contexts/ThemeContext';
 
 const App = (): React.ReactNode => {
   const { results, loading, handleSearch, throwError, currentPage, totalPages, handlePageChange, fetchData } = useFetchData();
@@ -21,6 +23,7 @@ const App = (): React.ReactNode => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const selectedItems = useSelector((state: RootState) => state.selectedItems.selectedItems);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -31,6 +34,12 @@ const App = (): React.ReactNode => {
       fetchData(currentPage);
     }
   }, [location.search, fetchData, currentPage]);
+
+  useEffect(() => {
+    if (results.length > 0) {
+      dispatch(setPageItems({ items: results, currentPage }));
+    }
+  }, [results, currentPage, dispatch]);
 
   const handleCardClick = (card: CardItem) => {
     setSelectedCard(selectedCard === card ? null : card);
@@ -74,9 +83,20 @@ const App = (): React.ReactNode => {
     document.body.removeChild(link);
   };
 
+  const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTheme(e.target.value as 'light' | 'dark');
+  };
+
   return (
       <ErrorBoundary>
-        <div className="app-container">
+        <div className={`app-container ${theme}`}>
+          <div className="theme-switcher">
+            <label htmlFor="theme">Choose theme:</label>
+            <select id="theme" onChange={handleThemeChange} value={theme}>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </div>
           <div className="top-section">
             <Search onSearch={handleSearchChange} onThrowError={throwError} />
           </div>
