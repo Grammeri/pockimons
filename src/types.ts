@@ -1,10 +1,16 @@
 export type CardItem = {
     name: string;
     description: string;
+    sprites: {
+        front_default: string;
+    };
 };
 export type CardListProps = {
     cards: CardItem[];
     onCardClick: (card: CardItem) => void;
+    sprites: {
+        front_default: string;
+    };
 };
 
 export type ErrorProps = {

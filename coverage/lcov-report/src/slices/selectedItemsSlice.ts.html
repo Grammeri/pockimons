@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/error-boundary/ErrorBoundary.tsx</title>
+    <title>Code coverage report for src/slices/selectedItemsSlice.ts</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../../prettify.css" />
-    <link rel="stylesheet" href="../../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../../sort-arrow-sprite.png);
+            background-image: url(../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/error-boundary</a> ErrorBoundary.tsx</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/slices</a> selectedItemsSlice.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -88,56 +88,74 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { Component, ErrorInfo } from 'react';</span>
-import { ErrorProps, ErrorState } from '../../types';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { createSlice, PayloadAction } from '@reduxjs/toolkit';</span>
+import { CardItem } from '../types';
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export class E</span>rrorBoundary extends Component&lt;ErrorProps, ErrorState&gt; {
-<span class="fstat-no" title="function not covered" >    constructor(p</span>rops: ErrorProps) {
-<span class="cstat-no" title="statement not covered" >        super(props);</span>
-<span class="cstat-no" title="statement not covered" >        this.state = { hasError: false };</span>
-    }
-&nbsp;
-<span class="fstat-no" title="function not covered" >    static </span>getDerivedStateFromError(_: Error): ErrorState {
-<span class="cstat-no" title="statement not covered" >        return { hasError: true };</span>
-    }
-&nbsp;
-<span class="fstat-no" title="function not covered" >    componentDidCatch(</span>error: Error, errorInfo: ErrorInfo) {
-<span class="cstat-no" title="statement not covered" >        console.error("Uncaught error:", error, errorInfo);</span>
-    }
-&nbsp;
-<span class="fstat-no" title="function not covered" >    render(</span>) {
-<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (this.state.hasError) {</span>
-<span class="cstat-no" title="statement not covered" >            return &lt;h1&gt;Something went wrong.&lt;/h1&gt;;</span>
-        }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >        return this.props.children;</span>
-    }
+interface SelectedItemsState {
+    selectedItems: CardItem[];
 }
+&nbsp;
+const initialState: SelectedItemsState = <span class="cstat-no" title="statement not covered" >{</span>
+    selectedItems: [],
+};
+&nbsp;
+const selectedItemsSlice = <span class="cstat-no" title="statement not covered" >createSlice({</span>
+    name: 'selectedItems',
+    initialState,
+    reducers: {
+        addItem: <span class="fstat-no" title="function not covered" >(s</span>tate, action: PayloadAction&lt;CardItem&gt;) =&gt; {
+<span class="cstat-no" title="statement not covered" >            state.selectedItems.push(action.payload);</span>
+        },
+        removeItem: <span class="fstat-no" title="function not covered" >(s</span>tate, action: PayloadAction&lt;CardItem&gt;) =&gt; {
+<span class="cstat-no" title="statement not covered" >            state.selectedItems = state.selectedItems.filter(</span>
+<span class="fstat-no" title="function not covered" >                (i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item.name !== action.payload.name</span>
+            );
+        },
+        clearItems: <span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; {
+<span class="cstat-no" title="statement not covered" >            state.selectedItems = [];</span>
+        },
+    },
+});
+&nbsp;
+export const <span class="cstat-no" title="statement not covered" >{ addItem, removeItem, clearItems } = s</span>electedItemsSlice.actions;
+<span class="cstat-no" title="statement not covered" >export default selectedItemsSlice.reducer;</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -147,14 +165,14 @@ import { ErrorProps, ErrorState } from '../../types';
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
                 at 2024-07-20T20:41:11.547Z
             </div>
-        <script src="../../../prettify.js"></script>
+        <script src="../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../../sorter.js"></script>
-        <script src="../../../block-navigation.js"></script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
     </body>
 </html>
     
