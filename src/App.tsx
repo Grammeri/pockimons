@@ -1,5 +1,7 @@
+// App.tsx
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Search } from './components/search/Search';
 import { CardList } from './components/card-list/CardList';
 import { DetailedCard } from './components/detailed-card/DetailedCard';
@@ -9,6 +11,8 @@ import './App.css';
 import { useFetchData } from './hooks/useFetchData';
 import { CardItem } from './types';
 import useSearchTerm from './hooks/useSearchTerm';
+import { RootState } from './store';
+import { clearItems } from './slices/selectedItemsSlice';
 
 const App = (): React.ReactNode => {
   const { results, loading, handleSearch, throwError, currentPage, totalPages, handlePageChange, fetchData } = useFetchData();
@@ -16,6 +20,8 @@ const App = (): React.ReactNode => {
   const [searchTerms, addSearchTerm] = useSearchTerm('searchTerms');
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const selectedItems = useSelector((state: RootState) => state.selectedItems.selectedItems);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -53,6 +59,22 @@ const App = (): React.ReactNode => {
     handlePageChange(page);
   };
 
+  const handleUnselectAll = () => {
+    dispatch(clearItems());
+  };
+
+  const handleDownload = () => {
+    const csvContent = 'data:text/csv;charset=utf-8,'
+        + selectedItems.map(item => `${item.name},${item.description}`).join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `${selectedItems.length}_items.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
       <ErrorBoundary>
         <div className="app-container">
@@ -60,11 +82,20 @@ const App = (): React.ReactNode => {
             <Search onSearch={handleSearchChange} onThrowError={throwError} />
           </div>
           <div className="bottom-section">
-            {loading ? <p>Loading...</p> : <CardList cards={results} onCardClick={handleCardClick} />}
-            {selectedCard && <DetailedCard card={selectedCard} onClose={() => setSelectedCard(null)} />}
+            <div className="content-wrapper">
+              {loading ? <p>Loading...</p> : <CardList cards={results} onCardClick={handleCardClick} />}
+              {selectedCard && <DetailedCard card={selectedCard} onClose={() => setSelectedCard(null)} />}
+            </div>
           </div>
           <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChangeWithSearch} />
           <Outlet />
+          {selectedItems.length > 0 && (
+              <div className="flyout">
+                <p>Items selected: {selectedItems.length}</p>
+                <button onClick={handleUnselectAll}>Unselect all</button>
+                <button onClick={handleDownload}>Download</button>
+              </div>
+          )}
         </div>
       </ErrorBoundary>
   );

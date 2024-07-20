@@ -1,4 +1,6 @@
 .detailed-card {
+  flex: 0 0 30%; /* Ширина детальной карточки */
+  margin-left: 2rem; /* Отступ слева для разделения от списка карточек */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,8 +8,6 @@
   border: 1px solid #ccc;
   padding: 1.25rem;
   background-color: orange;
-  width: 30%;
-  margin-top: 1rem;
   box-sizing: border-box;
 }
 
@@ -36,19 +36,14 @@
 }
 
 @media (max-width: 800px) {
+  .content-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .detailed-card {
     width: 85%;
     padding: 0.625rem;
     margin-top: 1.25rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .detailed-card {
-    width: 100%;
-    padding: 0.625rem;
-    margin-top: 1.25rem;
-    margin-bottom: 1.25rem;
-    padding: 0 1rem;
   }
 }

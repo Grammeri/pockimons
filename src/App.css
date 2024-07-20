@@ -1,46 +1,66 @@
+/* src/App.css */
 .app-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: auto;
+  background-color: #f8f9fa;
+
+}
+.top-section{
+  display: flex;
+  justify-content: center;
   padding: 1rem;
 }
 
-.top-section {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1.25rem;
+.flyout {
+  width: 50%;
+  color: black;
+  text-align: center;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+
+}
+
+.flyout button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin: 0.02rem;
+}
+
+.flyout button:hover {
+  background-color: #e60000;
 }
 
 .bottom-section {
+  border: 1px solid black;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80%;
-  gap: 1rem;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-between; /* Обеспечиваем выравнивание по горизонтали */
+  width: 80%; /* Задаем ширину, чтобы было место для обеих карточек */
 }
 
 @media (max-width: 800px) {
-  .top-section {
-    flex-direction: column;
-    align-items: center;
-  }
-
   .bottom-section {
+    border: 1px solid black;
+    display: block;
+    justify-content: center;
+  }
+  .search-container {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 1rem;
+    width: 100%;
   }
 }
 
-@media (max-width: 380px) {
-  .top-section {
-    padding: 0 0.5rem;
-  }
-
-  .bottom-section {
-    flex-direction: column;
-    align-items: center;
-    padding: 0 0.5rem;
-  }
-}

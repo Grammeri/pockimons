@@ -24,7 +24,7 @@
 }
 
 .clear-button {
-  display: block;
+  display: flex;
   margin: 1rem auto;
   padding: 0.5rem 1rem;
   background-color: #007bff;
