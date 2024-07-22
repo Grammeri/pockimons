@@ -38,6 +38,7 @@ export const Search: React.FC<SearchProps> = ({ onSearch, onThrowError }) => {
                 value={searchTerm}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
+                placeholder="Search"
             />
             <button onClick={handleSearchClick}>Search</button>
             <button onClick={onThrowError}>Throw Error</button>
