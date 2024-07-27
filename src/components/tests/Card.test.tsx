@@ -1,12 +1,11 @@
+// src/components/tests/Card.test.tsx
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { describe, it, expect } from 'vitest';
 import { Card } from '../card/Card';
 
-const mockCard = {
-  name: 'Pikachu'
-};
-
-test('renders the relevant card data', () => {
-  render(<Card name={mockCard.name} />);
-  expect(screen.getByText(mockCard.name)).toBeInTheDocument();
+describe('Card', () => {
+  it('renders the card with the correct name', () => {
+    render(<Card name="Pikachu" />);
+    expect(screen.getByText('Pikachu')).toBeInTheDocument();
+  });
 });

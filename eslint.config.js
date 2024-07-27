@@ -1,40 +1,44 @@
-import { Linter } from 'eslint';
+import js from "@eslint/js";
+import globals from "globals";
+import eslintReact from "eslint-plugin-react";
+import eslintReactHooks from "eslint-plugin-react-hooks";
+import eslintReactRefresh from "eslint-plugin-react-refresh";
+import prettierPlugin from "eslint-plugin-prettier";
+import eslintConfigPrettier from "eslint-config-prettier";
 
-const config: Linter.Config = {
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 2020,
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
+/** @type {import('eslint').Linter.FlatConfig[]} */
+export default [
+  {
+    plugins: {
+      'react-hooks': eslintReactHooks,
+      react: eslintReact,
+      'react-refresh': eslintReactRefresh,
+      prettier: prettierPlugin,
     },
   },
-  settings: {
-    react: {
-      version: 'detect',
+  {
+    ignores: ['node_modules', 'dist', 'coverage'],
+  },
+  js.configs.recommended,
+  {
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.browser,
+        ...globals.es2021,
+      },
     },
   },
-  plugins: [
-    '@typescript-eslint',
-    'react',
-    'react-hooks',
-    'react-refresh',
-    'prettier',
-  ],
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:prettier/recommended',
-  ],
-  rules: {
-    'prettier/prettier': 'error',
-    'react-refresh/only-export-components': 'warn',
-    'react/jsx-uses-react': 'off',
-    'react/react-in-jsx-scope': 'off',
+  {
+    files: ['**/*.{js,jsx}'],
+    rules: {
+      ...eslintConfigPrettier.rules,
+      'react/jsx-no-target-blank': 'off',
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+      'prefer-const': 'error',
+    },
   },
-  ignorePatterns: ['dist', 'node_modules'],
-};
-
-export default config;
+];
