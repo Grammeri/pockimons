@@ -1,18 +1,18 @@
-yarimport React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
-import { Provider } from 'react-redux';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { store } from '../../store';
+import React from 'react';
+import {render, screen, fireEvent} from '@testing-library/react';
+import {describe, it, expect, vi} from 'vitest';
+import {Provider} from 'react-redux';
+import {MemoryRouter, Route, Routes} from 'react-router-dom';
+import {store} from '../../store';
 import App from '../../App';
-import { CardItem } from '../../types';
+import {CardItem} from '../../types';
 
 // Mocking hooks and components
 const setThemeMock = vi.fn();
 
 vi.mock('../../hooks/useFetchData', () => ({
     useFetchData: () => ({
-        results: [{ name: 'Pikachu', description: 'Electric', sprites: { front_default: '' } }],
+        results: [{name: 'Pikachu', description: 'Electric', sprites: {front_default: ''}}],
         loading: false,
         handleSearch: vi.fn(),
         throwError: vi.fn(),
@@ -41,7 +41,7 @@ interface SearchProps {
 }
 
 vi.mock('../../components/search/Search', () => ({
-    Search: ({ onSearch, onThrowError }: SearchProps) => (
+    Search: ({onSearch, onThrowError}: SearchProps) => (
         <div>
             <input
                 data-testid="search-input"
@@ -60,7 +60,7 @@ interface CardListProps {
 }
 
 vi.mock('../../components/card-list/CardList', () => ({
-    CardList: ({ cards, onCardClick }: CardListProps) => (
+    CardList: ({cards, onCardClick}: CardListProps) => (
         <div>
             {cards.map((card: CardItem) => (
                 <div key={card.name} onClick={() => onCardClick(card)}>
@@ -77,7 +77,7 @@ interface DetailedCardProps {
 }
 
 vi.mock('../../components/detailed-card/DetailedCard', () => ({
-    DetailedCard: ({ card, onClose }: DetailedCardProps) => (
+    DetailedCard: ({card, onClose}: DetailedCardProps) => (
         <div>
             <button onClick={onClose}>Close</button>
             <div>{card.name}</div>
@@ -92,7 +92,7 @@ interface PaginationProps {
 }
 
 vi.mock('../../components/pagination/Pagination', () => ({
-    Pagination: ({ currentPage, totalPages, onPageChange }: PaginationProps) => (
+    Pagination: ({currentPage, totalPages, onPageChange}: PaginationProps) => (
         <div>
             <button
                 onClick={() => onPageChange(currentPage - 1)}
@@ -111,7 +111,7 @@ vi.mock('../../components/pagination/Pagination', () => ({
 }));
 
 vi.mock('../../components/error-boundary/ErrorBoundary', () => ({
-    ErrorBoundary: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+    ErrorBoundary: ({children}: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
 describe('App', () => {
@@ -120,7 +120,7 @@ describe('App', () => {
             <Provider store={store}>
                 <MemoryRouter>
                     <Routes>
-                        <Route path="/" element={<App />} />
+                        <Route path="/" element={<App/>}/>
                     </Routes>
                 </MemoryRouter>
             </Provider>
@@ -135,14 +135,14 @@ describe('App', () => {
             <Provider store={store}>
                 <MemoryRouter>
                     <Routes>
-                        <Route path="/" element={<App />} />
+                        <Route path="/" element={<App/>}/>
                     </Routes>
                 </MemoryRouter>
             </Provider>
         );
 
         const input = screen.getByTestId('search-input') as HTMLInputElement;
-        fireEvent.change(input, { target: { value: 'Pikachu' } });
+        fireEvent.change(input, {target: {value: 'Pikachu'}});
 
         expect(input.value).toBe('Pikachu');
     });
@@ -152,7 +152,7 @@ describe('App', () => {
             <Provider store={store}>
                 <MemoryRouter>
                     <Routes>
-                        <Route path="/" element={<App />} />
+                        <Route path="/" element={<App/>}/>
                     </Routes>
                 </MemoryRouter>
             </Provider>
@@ -173,15 +173,32 @@ describe('App', () => {
             <Provider store={store}>
                 <MemoryRouter>
                     <Routes>
-                        <Route path="/" element={<App />} />
+                        <Route path="/" element={<App/>}/>
                     </Routes>
                 </MemoryRouter>
             </Provider>
         );
 
         const themeSelect = screen.getByLabelText('Choose theme:') as HTMLSelectElement;
-        fireEvent.change(themeSelect, { target: { value: 'dark' } });
+        fireEvent.change(themeSelect, {target: {value: 'dark'}});
 
         expect(setThemeMock).toHaveBeenCalledWith('dark');
+    });
+
+    it('handles search input change', () => {
+        render(
+            <Provider store={store}>
+                <MemoryRouter>
+                    <Routes>
+                        <Route path="/" element={<App/>}/>
+                    </Routes>
+                </MemoryRouter>
+            </Provider>
+        );
+
+        const input = screen.getByTestId('search-input') as HTMLInputElement;
+        fireEvent.change(input, {target: {value: 'Pikachu'}});
+
+        expect(input.value).toBe('Pikachu');
     });
 });
