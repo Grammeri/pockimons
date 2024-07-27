@@ -2,7 +2,12 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { useFetchData } from '../../hooks/useFetchData';
 import { vi } from 'vitest';
 
-const mockFetch = (data: any) => {
+interface PokemonData {
+    count: number;
+    results: Array<{ name: string; url: string }>;
+}
+
+const mockFetch = (data: PokemonData) => {
     global.fetch = vi.fn(() =>
         Promise.resolve({
             json: () => Promise.resolve(data),
