@@ -1,53 +1,49 @@
-/* DetailedCard.css */
 .detailed-card {
+  flex: 0 0 30%;
+  margin-left: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px solid #ccc;
   padding: 1.25rem;
-  background-color: white;
-  width: 30%;
-  height: 50%;
-  margin-top: 1rem;
   background-color: orange;
+  box-sizing: border-box;
 }
 
 .detailed-card button {
   margin-top: 0.625rem;
   align-self: flex-start;
   border-radius: 0.25rem;
-  background-color:lightgray;
+  background-color: lightgray;
   padding: 0.5rem;
- color: red;
+  color: red;
 }
 
-.detailed-card button:hover { /* Удалите пробел между button и :hover */
+.detailed-card button:hover {
   background-color: white;
 }
-
 
 .detailed-card img {
   max-width: 100%;
   height: auto;
 }
 
+.detailed-card p {
+  word-wrap: break-word;
+  max-width: 100%;
+  text-align: justify;
+}
+
 @media (max-width: 800px) {
+  .content-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .detailed-card {
-    position: static;
     width: 85%;
     padding: 0.625rem;
     margin-top: 1.25rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .detailed-card {
-    position: static;
-    width: 100%;
-    padding: 0.625rem;
-    margin-top: 1.25rem;
-    margin-bottom: 1.25rem;
-    padding: 0 1rem;
   }
 }

@@ -1,17 +1,16 @@
-// src/types.ts
-
 export type CardItem = {
     name: string;
     description: string;
+    sprites: {
+        front_default: string;
+    };
 };
-
-export type CardProps = {
-    items: CardItem[];
-};
-
 export type CardListProps = {
     cards: CardItem[];
     onCardClick: (card: CardItem) => void;
+    sprites: {
+        front_default: string;
+    };
 };
 
 export type ErrorProps = {
@@ -31,4 +30,13 @@ export type PaginationProps = {
     totalPages: number;
     onPageChange: (page: number) => void;
 };
-
+export type ApiResponse = {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: ApiResult[];
+};
+export type ApiResult = {
+    name: string;
+    url: string;
+};

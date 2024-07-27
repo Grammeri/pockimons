@@ -1,20 +1,50 @@
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+// src/components/tests/CardList.test.tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import selectedItemsReducer from '../../slices/selectedItemsSlice';
 import { CardList } from '../card-list/CardList';
 import { CardItem } from '../../types';
 
 const mockCards: CardItem[] = [
-  { name: 'Pikachu', description: 'Electric type Pokémon' },
-  { name: 'Bulbasaur', description: 'Grass/Poison type Pokémon' },
+    { name: 'Pikachu', description: 'Electric type', sprites: { front_default: '' } },
+    { name: 'Bulbasaur', description: 'Grass type', sprites: { front_default: '' } },
 ];
 
-test('renders the specified number of cards', () => {
-  render(<CardList cards={mockCards} onCardClick={() => {}} />);
-  const cards = screen.getAllByRole('heading', { level: 3 });
-  expect(cards).toHaveLength(mockCards.length);
-});
+const renderWithProvider = (component: React.ReactElement) => {
+    const store = configureStore({ reducer: { selectedItems: selectedItemsReducer } });
+    return render(<Provider store={store}>{component}</Provider>);
+};
 
-test('displays appropriate message if no cards are present', () => {
-  render(<CardList cards={[]} onCardClick={() => {}} />);
-  expect(screen.getByText('No cards available')).toBeInTheDocument();
+describe('CardList', () => {
+    it('renders a list of cards', () => {
+        renderWithProvider(<CardList cards={mockCards} onCardClick={vi.fn()} />);
+        expect(screen.getByText('Pikachu')).toBeInTheDocument();
+        expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
+    });
+
+    it('handles checkbox changes correctly', () => {
+        renderWithProvider(<CardList cards={mockCards} onCardClick={vi.fn()} />);
+        const pikachuCheckbox = screen.getByLabelText('Pikachu');
+        fireEvent.click(pikachuCheckbox);
+        expect(pikachuCheckbox).toBeChecked();
+        fireEvent.click(pikachuCheckbox);
+        expect(pikachuCheckbox).not.toBeChecked();
+    });
+
+    it('calls onCardClick when card name is clicked', () => {
+        const onCardClick = vi.fn();
+        renderWithProvider(<CardList cards={mockCards} onCardClick={onCardClick} />);
+        fireEvent.click(screen.getByText('Pikachu'));
+        expect(onCardClick).toHaveBeenCalledWith(mockCards[0]);
+    });
+
+    it('clears all selected items when Clear All button is clicked', () => {
+        renderWithProvider(<CardList cards={mockCards} onCardClick={vi.fn()} />);
+        const clearButton = screen.getByText('Clear All');
+        fireEvent.click(clearButton);
+        expect(screen.getByLabelText('Pikachu')).not.toBeChecked();
+        expect(screen.getByLabelText('Bulbasaur')).not.toBeChecked();
+    });
 });

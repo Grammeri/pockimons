@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { CardItem } from '../types';
+import { useState, useEffect, useCallback } from 'react';
+import { ApiResult, CardItem } from '../types';
 
 export const useFetchData = () => {
   const [results, setResults] = useState<CardItem[]>([]);
@@ -8,13 +8,13 @@ export const useFetchData = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
 
-  const fetchData = async (page: number) => {
+  const fetchData = useCallback(async (page: number) => {
     setLoading(true);
     setError(null);
     try {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${(page - 1) * 10}`);
       const data = await response.json();
-      const items = data.results.map((item: any) => ({
+      const items = data.results.map((item: ApiResult) => ({
         name: item.name,
         description: item.url,
       }));
@@ -25,15 +25,34 @@ export const useFetchData = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchData(currentPage);
-  }, [currentPage]);
+  }, [fetchData, currentPage]);
 
-  const handleSearch = () => {
-    setCurrentPage(1);
-    fetchData(1); // Обновление данных при поиске
+  const handleSearch = async (searchTerm: string) => {
+    if (searchTerm === '') {
+      fetchData(currentPage);
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTerm.toLowerCase()}`);
+      const data = await response.json();
+      const item = {
+        name: data.name,
+        description: data.url,
+      };
+      setResults([item]);
+      setTotalPages(1);
+      setCurrentPage(1);
+    } catch (error) {
+      setError('Failed to fetch data');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handlePageChange = (page: number) => {
@@ -53,5 +72,6 @@ export const useFetchData = () => {
     handleSearch,
     handlePageChange,
     throwError,
+    fetchData,
   };
 };
