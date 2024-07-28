@@ -4,7 +4,7 @@ import {describe, it, expect, vi} from 'vitest';
 import {Provider} from 'react-redux';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
 import {store} from '../../store';
-import App from '../../App';
+import App from 'src/pages/App';
 import {CardItem} from '../../types';
 
 // Mocking hooks and components

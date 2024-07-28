@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '../../contexts/ThemeContext';
 import { store } from '../../store';
-import App from '../../App';
+import App from 'src/pages/App';
 
 describe('Main application rendering', () => {
     it('renders the application without crashing', async () => {

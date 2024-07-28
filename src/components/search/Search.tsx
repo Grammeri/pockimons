@@ -1,6 +1,6 @@
 import React from 'react';
 import { SearchProps } from '../../types';
-import './Search.css';
+import styles from './Search.module.css';
 import useSearchTerm from '../../hooks/useSearchTerm';
 
 export const Search: React.FC<SearchProps> = ({ onSearch, onThrowError }) => {
@@ -32,7 +32,7 @@ export const Search: React.FC<SearchProps> = ({ onSearch, onThrowError }) => {
     };
 
     return (
-        <div className="search-container">
+        <div className={styles.searchContainer}>
             <input
                 type="text"
                 value={searchTerm}
