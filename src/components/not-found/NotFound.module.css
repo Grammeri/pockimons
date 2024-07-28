@@ -1,0 +1,9 @@
+.notFoundContainer {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.notFoundContainer img {
+  max-width: 100%;
+  height: auto;
+}
