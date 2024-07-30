@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useState, ReactNode, useContext } from 'react';
 
 type Theme = 'light' | 'dark';
@@ -14,7 +16,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
     return (
         <ThemeContext.Provider value={{ theme, setTheme }}>
-            {children}
+            <div className={theme}>{children}</div>
         </ThemeContext.Provider>
     );
 };

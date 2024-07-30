@@ -17,11 +17,18 @@
     "incremental": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "src/**/*",
-    "images.d.ts"
+    "images.d.ts",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

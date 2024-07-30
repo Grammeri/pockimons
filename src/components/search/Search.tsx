@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { SearchProps } from '../../types';
 import styles from './Search.module.css';

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { CardItem } from '../../types';
 import { useGetPokemonByNameQuery } from '../../services/pokemon';
