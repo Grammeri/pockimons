@@ -1,8 +1,7 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
-import { Search } from '../search/Search';
-import { SearchProps } from '../../types';
+import {fireEvent, render, screen} from '@testing-library/react';
+import {describe, expect, it, vi} from 'vitest';
+import {Search} from '../search/Search';
 import useSearchTerm from '../../hooks/useSearchTerm';
 
 vi.mock('../../hooks/useSearchTerm');

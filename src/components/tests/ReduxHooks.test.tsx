@@ -1,13 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { store } from '../../store';
 
 describe('useReduxHooks', () => {
-    it('should use dispatch and selector', () => {
+    it('should use app dispatch and app selector', () => {
         const { result } = renderHook(() => {
-            const dispatch = useDispatch();
-            const selector = useSelector(state => state);
+            const dispatch = useAppDispatch();
+            const selector = useAppSelector(state => state);
             return { dispatch, selector };
         }, {
             wrapper: ({ children }) => <Provider store={store}>{children}</Provider>,
