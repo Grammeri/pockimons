@@ -3,7 +3,6 @@ import { render } from '@testing-library/react';
 import { vi } from 'vitest';
 import MyApp from '../../pages/_app';
 
-// Мокаем store и ThemeContext
 vi.mock('../../store', () => ({
     store: {
         getState: vi.fn(() => ({})),

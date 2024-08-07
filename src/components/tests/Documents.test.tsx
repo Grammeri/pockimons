@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import MyDocument from '../../pages/_document';
 import { vi } from 'vitest';
-import { Html, Head, Main, NextScript, DocumentProps } from 'next/document';
+import { DocumentProps } from 'next/document';
 
 vi.mock('next/document', async (importOriginal) => {
   const original = await importOriginal();

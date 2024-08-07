@@ -25,6 +25,10 @@
   background-color: #333;
   color: white;
 }
+.appContainer.dark .flyout p {
+  color: white;
+}
+
 .topSection{
   display: flex;
   justify-content: center;

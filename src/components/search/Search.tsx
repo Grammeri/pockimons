@@ -9,7 +9,6 @@ export const Search: React.FC<SearchProps> = ({ onSearch, onThrowError }) => {
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
-        console.log(`Input change: ${event.target.value}`);
     };
 
     const handleSearchClick = () => {
@@ -18,7 +17,6 @@ export const Search: React.FC<SearchProps> = ({ onSearch, onThrowError }) => {
             if (!searchTerms.includes(trimmedTerm)) {
                 addSearchTerm(trimmedTerm);
             }
-            console.log(`Searching for term: ${trimmedTerm}`);
             onSearch(trimmedTerm);
         } else {
             onSearch('');
