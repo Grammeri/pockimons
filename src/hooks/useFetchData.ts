@@ -1,3 +1,4 @@
+// useFetchData.ts
 import { useState, useEffect, useCallback } from 'react';
 import { ApiResult, CardItem } from '../types';
 
@@ -14,9 +15,16 @@ export const useFetchData = () => {
     try {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${(page - 1) * 10}`);
       const data = await response.json();
-      const items = data.results.map((item: ApiResult) => ({
-        name: item.name,
-        description: item.url,
+      const items = await Promise.all(data.results.map(async (item: ApiResult) => {
+        const pokemonResponse = await fetch(item.url);
+        const pokemonData = await pokemonResponse.json();
+        return {
+          name: item.name,
+          description: item.url,
+          sprites: {
+            front_default: pokemonData.sprites.front_default,
+          },
+        };
       }));
       setResults(items);
       setTotalPages(Math.ceil(data.count / 10));
@@ -44,6 +52,9 @@ export const useFetchData = () => {
       const item = {
         name: data.name,
         description: data.url,
+        sprites: {
+          front_default: data.sprites.front_default,
+        },
       };
       setResults([item]);
       setTotalPages(1);

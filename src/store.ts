@@ -1,9 +1,9 @@
+// store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { pokemonApi } from './services/pokemon';
-import selectedItemsReducer from './slices/selectedItemsSlice'
+import selectedItemsReducer from './slices/selectedItemsSlice';
 import currentPageReducer from './slices/currentPageSlice';
-import { store } from './store';
 
 export const store = configureStore({
     reducer: {
@@ -12,7 +12,7 @@ export const store = configureStore({
         currentPage: currentPageReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(pokemonApi.middleware),
+      getDefaultMiddleware().concat(pokemonApi.middleware),
 });
 
 setupListeners(store.dispatch);
