@@ -89,34 +89,34 @@ const HomePage: React.FC = () => {
     };
 
     return (
-        <ErrorBoundary>
-            <div className={`${styles.appContainer} ${theme}`}>
-                <div className={styles.themeSwitcher}>
-                    <label htmlFor="theme">Choose theme:</label>
-                    <select id="theme" onChange={handleThemeChange} value={theme}>
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
-                    </select>
+      <ErrorBoundary>
+          <div className={`${styles.appContainer} ${theme === 'light' ? styles.light : styles.dark}`}>
+              <div className={styles.themeSwitcher}>
+                  <label htmlFor="theme">Choose theme:</label>
+                  <select id="theme" onChange={handleThemeChange} value={theme}>
+                      <option value="light">Light</option>
+                      <option value="dark">Dark</option>
+                  </select>
+              </div>
+              <div className={styles.topSection}>
+                  <Search onSearch={handleSearchChange} onThrowError={throwError} />
+              </div>
+              <div className={styles.bottomSection}>
+                  <div className={styles.contentWrapper}>
+                      {loading ? <p>Loading...</p> : <CardList cards={results} onCardClick={handleCardClick} />}
+                      {selectedCard && <DetailedCard card={selectedCard} onClose={() => setSelectedCard(null)} />}
+                  </div>
+              </div>
+              <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChangeWithSearch} />
+              {selectedItems.length > 0 && (
+                <div className={styles.flyout}>
+                    <p>Items selected: {selectedItems.length}</p>
+                    <button onClick={handleUnselectAll}>Unselect all</button>
+                    <button onClick={handleDownload}>Download</button>
                 </div>
-                <div className={styles.topSection}>
-                    <Search onSearch={handleSearchChange} onThrowError={throwError} />
-                </div>
-                <div className={styles.bottomSection}>
-                    <div className={styles.contentWrapper}>
-                        {loading ? <p>Loading...</p> : <CardList cards={results} onCardClick={handleCardClick} />}
-                        {selectedCard && <DetailedCard card={selectedCard} onClose={() => setSelectedCard(null)} />}
-                    </div>
-                </div>
-                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChangeWithSearch} />
-                {selectedItems.length > 0 && (
-                    <div className={styles.flyout}>
-                        <p>Items selected: {selectedItems.length}</p>
-                        <button onClick={handleUnselectAll}>Unselect all</button>
-                        <button onClick={handleDownload}>Download</button>
-                    </div>
-                )}
-            </div>
-        </ErrorBoundary>
+              )}
+          </div>
+      </ErrorBoundary>
     );
 };
 
