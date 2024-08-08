@@ -3,19 +3,19 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
-import { Search } from '../../src/components/search/Search';
-import { CardList } from '../../src/components/card-list/CardList';
-import { DetailedCard } from '../../src/components/detailed-card/DetailedCard';
-import { ErrorBoundary } from '../../src/components/error-boundary/ErrorBoundary';
-import { Pagination } from '../../src/components/pagination/Pagination';
-import styles from '../App.module.css';
-import { useFetchData } from '../../src/hooks/useFetchData';
-import { CardItem } from '../../src/types';
-import useSearchTerm from '../../src/hooks/useSearchTerm';
-import { RootState } from '../../src/store';
-import { clearItems } from '../../src/slices/selectedItemsSlice';
-import { setPageItems } from '../../src/slices/currentPageSlice';
-import { useTheme } from '../../src/contexts/ThemeContext';
+import { Search } from '../../app/components/search/Search';
+import { CardList } from '../../app/components/card-list/CardList';
+import { DetailedCard } from '../../app/components/detailed-card/DetailedCard';
+import { ErrorBoundary } from '../../app/components/error-boundary/ErrorBoundary';
+import { Pagination } from '../../app/components/pagination/Pagination';
+import styles from './App.module.css';
+import { useFetchData } from '../../app/hooks/useFetchData';
+import { CardItem } from '../../app/types';
+import useSearchTerm from '../../app/hooks/useSearchTerm';
+import { RootState } from '../../app/store';
+import { clearItems } from '../../app/slices/selectedItemsSlice';
+import { setPageItems } from '../../app/slices/currentPageSlice';
+import { useTheme } from '../../app/contexts/ThemeContext';
 
 const HomePage: React.FC = () => {
     const { results, loading, handleSearch, throwError, currentPage, totalPages, handlePageChange, fetchData } = useFetchData();

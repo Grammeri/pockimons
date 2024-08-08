@@ -1,8 +1,9 @@
 'use client';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { store } from '../src/store';
-import { ThemeProvider } from '../src/contexts/ThemeContext';
+import { store } from '../app/store';
+import { ThemeProvider } from '../app/contexts/ThemeContext'
+
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
