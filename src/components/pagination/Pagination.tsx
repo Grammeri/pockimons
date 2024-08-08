@@ -1,6 +1,6 @@
 import React from 'react';
 import { PaginationProps } from '../../types';
-import './Pagination.css';
+import styles from './Pagination.module.css';
 
 export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
     const pageNumbers = [];
@@ -18,9 +18,9 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
     }
 
     return (
-        <div className="pagination">
+        <div className={styles.pagination}>
             <button
-                className="pagination-arrow"
+                className={styles.paginationArrow}
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
             >
@@ -29,14 +29,14 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
             {pageNumbers.map(number => (
                 <button
                     key={number}
-                    className={`pagination-button ${currentPage === number ? 'active' : ''}`}
+                    className={`${styles.paginationButton} ${currentPage === number ? 'active' : ''}`}
                     onClick={() => onPageChange(number)}
                 >
                     {number}
                 </button>
             ))}
             <button
-                className="pagination-arrow"
+                className={styles.paginationArrow}
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
             >

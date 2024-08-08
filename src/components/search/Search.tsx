@@ -1,6 +1,6 @@
 import React from 'react';
 import { SearchProps } from '../../types';
-import './Search.css';
+import styles from './Search.module.css';
 import useSearchTerm from '../../hooks/useSearchTerm';
 
 export const Search: React.FC<SearchProps> = ({ onSearch, onThrowError }) => {
@@ -9,7 +9,6 @@ export const Search: React.FC<SearchProps> = ({ onSearch, onThrowError }) => {
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
-        console.log(`Input change: ${event.target.value}`);
     };
 
     const handleSearchClick = () => {
@@ -18,7 +17,6 @@ export const Search: React.FC<SearchProps> = ({ onSearch, onThrowError }) => {
             if (!searchTerms.includes(trimmedTerm)) {
                 addSearchTerm(trimmedTerm);
             }
-            console.log(`Searching for term: ${trimmedTerm}`);
             onSearch(trimmedTerm);
         } else {
             onSearch('');
@@ -32,7 +30,7 @@ export const Search: React.FC<SearchProps> = ({ onSearch, onThrowError }) => {
     };
 
     return (
-        <div className="search-container">
+        <div className={styles.searchContainer}>
             <input
                 type="text"
                 value={searchTerm}

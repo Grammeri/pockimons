@@ -2,13 +2,18 @@ import { useState, useEffect } from 'react';
 
 const useSearchTerm = (key: string) => {
   const [searchTerms, setSearchTerms] = useState<string[]>(() => {
-    const storedTerms = localStorage.getItem(key);
-    const terms = storedTerms ? JSON.parse(storedTerms) : [];
-    return terms;
+    if (typeof window !== 'undefined') {
+      const storedTerms = localStorage.getItem(key);
+      const terms = storedTerms ? JSON.parse(storedTerms) : [];
+      return terms;
+    }
+    return [];
   });
 
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(searchTerms));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(key, JSON.stringify(searchTerms));
+    }
   }, [key, searchTerms]);
 
   const addSearchTerm = (term: string) => {

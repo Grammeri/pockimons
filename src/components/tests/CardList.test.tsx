@@ -1,4 +1,4 @@
-// src/components/tests/CardList.test.tsx
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { Provider } from 'react-redux';
@@ -42,9 +42,19 @@ describe('CardList', () => {
 
     it('clears all selected items when Clear All button is clicked', () => {
         renderWithProvider(<CardList cards={mockCards} onCardClick={vi.fn()} />);
+        const pikachuCheckbox = screen.getByLabelText('Pikachu');
+        const bulbasaurCheckbox = screen.getByLabelText('Bulbasaur');
+
+        fireEvent.click(pikachuCheckbox);
+        fireEvent.click(bulbasaurCheckbox);
+
+        expect(pikachuCheckbox).toBeChecked();
+        expect(bulbasaurCheckbox).toBeChecked();
+
         const clearButton = screen.getByText('Clear All');
         fireEvent.click(clearButton);
-        expect(screen.getByLabelText('Pikachu')).not.toBeChecked();
-        expect(screen.getByLabelText('Bulbasaur')).not.toBeChecked();
+
+        expect(pikachuCheckbox).not.toBeChecked();
+        expect(bulbasaurCheckbox).not.toBeChecked();
     });
 });

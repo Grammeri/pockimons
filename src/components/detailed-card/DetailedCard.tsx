@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardItem } from '../../types';
 import { useGetPokemonByNameQuery } from '../../services/pokemon';
-import './DetailedCard.css';
+import styles from './DetailedCard.module.css';
 
 interface DetailedCardProps {
     card: CardItem;
@@ -12,7 +12,7 @@ export const DetailedCard: React.FC<DetailedCardProps> = ({ card, onClose }) => 
     const { data, error, isLoading } = useGetPokemonByNameQuery(card.name.toLowerCase());
 
     return (
-        <div className="detailed-card">
+        <div className={styles.detailedCard}>
             <button onClick={onClose}>Close</button>
             <h2>{card.name}</h2>
             <p>{card.description}</p>
