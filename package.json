@@ -48,6 +48,7 @@
     "msw": "^2.3.4",
     "prettier": "^3.3.3",
     "typescript": "^5.2.2",
+    "typescript-plugin-css-modules": "^5.1.0",
     "vitest": "^2.0.5",
     "whatwg-fetch": "^3.6.20"
   },

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { Search } from '../../app/components/search/Search';
 import { CardList } from '../../app/components/card-list/CardList';
@@ -21,20 +21,20 @@ const HomePage: React.FC = () => {
     const { results, loading, handleSearch, throwError, currentPage, totalPages, handlePageChange, fetchData } = useFetchData();
     const [selectedCard, setSelectedCard] = useState<CardItem | null>(null);
     const [searchTerms, addSearchTerm] = useSearchTerm('searchTerms');
-    const searchParams = useSearchParams();
+    const params = useParams();
     const router = useRouter();
     const dispatch = useDispatch();
     const selectedItems = useSelector((state: RootState) => state.selectedItems.selectedItems);
     const { theme, setTheme } = useTheme();
 
     useEffect(() => {
-        const searchTerm = searchParams.get('search') || '';
+        const searchTerm = Array.isArray(params.search) ? params.search[0] : params.search || '';
         if (searchTerm) {
             handleSearch(searchTerm);
         } else {
             fetchData(currentPage);
         }
-    }, [searchParams, fetchData, currentPage]);
+    }, [params, fetchData, currentPage]);
 
     useEffect(() => {
         if (results.length > 0) {
@@ -62,7 +62,7 @@ const HomePage: React.FC = () => {
     };
 
     const handlePageChangeWithSearch = (page: number) => {
-        const searchTerm = searchParams.get('search') || '';
+        const searchTerm = Array.isArray(params.search) ? params.search[0] : params.search || '';
         router.push(`/?page=${page}${searchTerm ? `&search=${searchTerm}` : ''}`);
         handlePageChange(page);
     };
@@ -90,7 +90,10 @@ const HomePage: React.FC = () => {
 
     return (
       <ErrorBoundary>
-          <div className={`${styles.appContainer} ${theme === 'light' ? styles.light : styles.dark}`}>
+          <div
+            data-testid="home-page-container"
+            className={`${styles.appContainer} ${theme === 'light' ? styles.light : styles.dark}`}
+          >
               <div className={styles.themeSwitcher}>
                   <label htmlFor="theme">Choose theme:</label>
                   <select id="theme" onChange={handleThemeChange} value={theme}>

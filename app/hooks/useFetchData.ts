@@ -17,6 +17,8 @@ export const useFetchData = () => {
       const items = data.results.map((item: ApiResult) => ({
         name: item.name,
         description: item.url,
+
+        sprites: '',
       }));
       setResults(items);
       setTotalPages(Math.ceil(data.count / 10));
@@ -44,6 +46,7 @@ export const useFetchData = () => {
       const item = {
         name: data.name,
         description: data.url,
+        sprites: data.sprites.front_default,
       };
       setResults([item]);
       setTotalPages(1);
