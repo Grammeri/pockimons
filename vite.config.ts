@@ -14,6 +14,6 @@ export default defineConfig({
         tsconfigPaths(),
     ],
     server: {
-        port: 3000, // Установите порт 3000
+        port: 3000,
     },
 });
