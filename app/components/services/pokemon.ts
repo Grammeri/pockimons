@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { CardItem } from '../types';
+import {CardItem} from '~/types';
 
 export const pokemonApi = createApi({
     reducerPath: 'pokemonApi',

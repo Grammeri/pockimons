@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { CardItem } from '../../types';
-import { useGetPokemonByNameQuery } from '../../services/pokemon';
 import styles from './DetailedCard.module.css';
+import {useGetPokemonByNameQuery} from '~/components/services/pokemon';
 
 interface DetailedCardProps {
     card: CardItem;
