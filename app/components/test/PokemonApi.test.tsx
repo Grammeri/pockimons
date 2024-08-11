@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { renderHook } from '@testing-library/react-hooks';
-import { useGetPokemonByNameQuery } from '../../services/pokemon';
+import { useGetPokemonByNameQuery } from '../services/pokemon';
 import { store } from '../../store';
 
 describe('pokemonApi', () => {

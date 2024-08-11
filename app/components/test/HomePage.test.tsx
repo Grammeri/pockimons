@@ -6,18 +6,15 @@ import { ThemeProvider } from '../../contexts/ThemeContext';
 import HomePage from '../../home/HomePage';
 import { vi } from 'vitest';
 
-vi.mock('next/navigation', () => ({
-  useRouter: () => ({
-    push: vi.fn(),
-  }),
+// Мокаем необходимые хуки из Remix
+vi.mock('@remix-run/react', () => ({
+  useNavigate: () => vi.fn(),
   useParams: () => ({
     search: '',
   }),
-  useSearchParams: () => ({
-    get: vi.fn().mockReturnValue(''),
-  }),
 }));
 
+// Мокаем кастомный хук useFetchData
 vi.mock('../../app/hooks/useFetchData', () => ({
   useFetchData: () => ({
     results: [],
@@ -34,11 +31,11 @@ vi.mock('../../app/hooks/useFetchData', () => ({
 describe('HomePage', () => {
   it('renders loading state correctly', () => {
     render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <HomePage />
-        </ThemeProvider>
-      </Provider>
+        <Provider store={store}>
+          <ThemeProvider>
+            <HomePage />
+          </ThemeProvider>
+        </Provider>
     );
 
     const loadingElement = screen.getByText(/loading/i);
@@ -47,11 +44,11 @@ describe('HomePage', () => {
 
   it('changes theme when the theme switcher is used', () => {
     render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <HomePage />
-        </ThemeProvider>
-      </Provider>
+        <Provider store={store}>
+          <ThemeProvider>
+            <HomePage />
+          </ThemeProvider>
+        </Provider>
     );
 
     const themeSwitcher = screen.getByLabelText(/choose theme/i);
@@ -63,11 +60,11 @@ describe('HomePage', () => {
 
   it('renders theme switcher label correctly', () => {
     render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <HomePage />
-        </ThemeProvider>
-      </Provider>
+        <Provider store={store}>
+          <ThemeProvider>
+            <HomePage />
+          </ThemeProvider>
+        </Provider>
     );
 
     const themeLabel = screen.getByText(/choose theme:/i);

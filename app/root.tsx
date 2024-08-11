@@ -1,9 +1,8 @@
-// app/root.tsx
 import React from "react";
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 import { Provider } from "react-redux";
-import { store } from "./store"; // Путь к store
-import { ThemeProvider } from "./contexts/ThemeContext"; // Путь к ThemeContext
+import { store } from "./store";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 export default function App() {
     return (

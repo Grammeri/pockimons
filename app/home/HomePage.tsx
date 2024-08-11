@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from '@remix-run/react'; // Импортируем useNavigate
+import { useParams, useNavigate } from '@remix-run/react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Search } from '../../app/components/search/Search';
 import { CardList } from '../../app/components/card-list/CardList';
@@ -50,20 +50,20 @@ const HomePage: React.FC = () => {
         setSelectedCard(null);
         if (searchTerm === '') {
             fetchData(currentPage);
-            navigate('/'); // Заменяем router.push на navigate
+            navigate('/');
         } else if (searchTerms.includes(searchTerm)) {
             handleSearch(searchTerm);
-            navigate(`/?search=${searchTerm}`); // Заменяем router.push на navigate
+            navigate(`/?search=${searchTerm}`);
         } else {
             handleSearch(searchTerm);
             addSearchTerm(searchTerm);
-            navigate(`/?search=${searchTerm}`); // Заменяем router.push на navigate
+            navigate(`/?search=${searchTerm}`);
         }
     };
 
     const handlePageChangeWithSearch = (page: number) => {
         const searchTerm = Array.isArray(params.search) ? params.search[0] : params.search || '';
-        navigate(`/?page=${page}${searchTerm ? `&search=${searchTerm}` : ''}`); // Заменяем router.push на navigate
+        navigate(`/?page=${page}${searchTerm ? `&search=${searchTerm}` : ''}`);
         handlePageChange(page);
     };
 

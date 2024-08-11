@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { DetailedCard } from '../detailed-card/DetailedCard';
 import { CardItem } from '../../types';
-import * as pokemonService from '../../services/pokemon';
+import * as pokemonService from '../services/pokemon';
 
 const mockCard: CardItem = {
     name: 'Pikachu',

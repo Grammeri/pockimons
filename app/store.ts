@@ -2,7 +2,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import selectedItemsReducer from './slices/selectedItemsSlice'
 import currentPageReducer from './slices/currentPageSlice';
-import {pokemonApi} from '~/components/services/pokemon';
+import {pokemonApi} from './components/services/pokemon';
+
 
 export const store = configureStore({
     reducer: {

@@ -5,7 +5,7 @@ import { PaginationProps } from '../../types';
 import styles from './Pagination.module.css';
 
 export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
-  // Явно указываем, что pageNumbers — это массив чисел
+
   const pageNumbers: number[] = [];
   const visiblePages = 5;
 

@@ -1,5 +1,5 @@
 import React from "react";
-import HomePage from "../home/HomePage"; // Убедитесь, что путь к HomePage правильный
+import HomePage from "../home/HomePage";
 
 export default function Page() {
   return <HomePage />;
