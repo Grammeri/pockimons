@@ -30,8 +30,7 @@
   color: white;
   border: none;
   border-radius: 5px;
-  cursor: pointer
-
+  cursor: pointer;
 }
 
 .clear-button:hover {

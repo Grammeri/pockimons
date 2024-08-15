@@ -4,8 +4,10 @@
     "module": "commonjs",
     "jsx": "react-jsx",
     "esModuleInterop": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "strict": true,
+    "skipLibCheck": true
   },
-  "include": ["src/**/*", "images.d.ts"],
+  "include": ["src/**/*", "node_modules/vitest/globals.d.ts"],
   "exclude": ["node_modules"]
 }

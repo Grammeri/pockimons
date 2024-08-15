@@ -8,4 +8,3 @@ export const Card: React.FC<{ name: string }> = ({ name }) => {
     </div>
   );
 };
-

@@ -12,7 +12,9 @@ export const useFetchData = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${(page - 1) * 10}`);
+      const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon?limit=10&offset=${(page - 1) * 10}`,
+      );
       const data = await response.json();
       const items = data.results.map((item: ApiResult) => ({
         name: item.name,
@@ -39,7 +41,9 @@ export const useFetchData = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchTerm.toLowerCase()}`);
+      const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/${searchTerm.toLowerCase()}`,
+      );
       const data = await response.json();
       const item = {
         name: data.name,
