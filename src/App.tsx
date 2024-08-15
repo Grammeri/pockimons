@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 const App = () => {
+  const test = anyVar;
+
   return (
     <Router>
       <nav>
