@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import UncontrolledForm from './components/uncontrolled-form/UncontrolledForm.tsx';
+import ControlledForm from './components/controlled-form/ControlledForm.tsx';
+
 
 const App = () => {
-  const unusedVariable = 42; // Неиспользуемая переменная
-
   return (
     <Router>
       <nav>
@@ -12,13 +13,8 @@ const App = () => {
       </nav>
       <Routes>
         <Route path="/" element={<div>Main Page</div>} />
-        <Route
-          path="/form-uncontrolled"
-          element={<div>Uncontrolled Form Page</div>}
-        />
-        <Route
-          path="/form-controlled"
-          element={<div>Controlled Form Page</div> /* ошибка, пропущена закрывающая скобка }}/>
+        <Route path="/form-uncontrolled" element={<UncontrolledForm />} />
+        <Route path="/form-controlled" element={<ControlledForm />} />
       </Routes>
     </Router>
   );
