@@ -1,0 +1,29 @@
+.nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav a:hover {
+  color: #ff6347;
+}
+
+.nav a.active {
+  border-bottom: 2px solid #ff6347;
+}
+
+.mainPage {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 50px;
+  color: #333;
+}

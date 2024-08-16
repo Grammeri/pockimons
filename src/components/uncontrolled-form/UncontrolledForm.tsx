@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import styles from './UncontrolledForm.module.scss'; // Импортируем стили как модуль
+import styles from './UncontrolledForm.module.scss';
 
 const UncontrolledForm = () => {
   const nameRef = useRef<HTMLInputElement>(null);
