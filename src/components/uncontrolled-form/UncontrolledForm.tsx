@@ -1,19 +1,23 @@
 import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUncontrolledFormData } from '../../store/slices/formDataSlice';
+import { ControlledFormData } from '../../interfaces/interfaces';
 import styles from './UncontrolledForm.module.scss';
 
 const UncontrolledForm = () => {
+  const dispatch = useDispatch();
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const data = {
-      name: nameRef.current?.value,
-      age: nameRef.current?.value,
-      email: nameRef.current?.value,
+    const data: ControlledFormData = {
+      name: nameRef.current?.value || '',
+      age: parseInt(ageRef.current?.value || '0', 10),
+      email: emailRef.current?.value || '',
     };
-    console.log("Uncontrolled Form Data:", data);
+    dispatch(setUncontrolledFormData(data));
   };
 
   return (

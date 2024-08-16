@@ -1,18 +1,27 @@
-import { BrowserRouter as Router, Routes, Route, Link, NavLink } from 'react-router-dom';
-import UncontrolledForm from './components/uncontrolled-form/UncontrolledForm.tsx';
-import ControlledForm from './components/controlled-form/ControlledForm.tsx';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import UncontrolledForm from './components/uncontrolled-form/UncontrolledForm';
+import ControlledForm from './components/controlled-form/ControlledForm';
+import Main from './components/main/Main';
 import styles from './App.module.scss';
+
+const Navigation = () => {
+  const location = useLocation();
+
+  return (
+    <nav className={styles.nav}>
+      <Link to="/" className={location.pathname === '/' ? styles.active : ''}>Main</Link>
+      <Link to="/form-uncontrolled" className={location.pathname === '/form-uncontrolled' ? styles.active : ''}>Uncontrolled Form</Link>
+      <Link to="/form-controlled" className={location.pathname === '/form-controlled' ? styles.active : ''}>Controlled Form</Link>
+    </nav>
+  );
+};
 
 const App = () => {
   return (
     <Router>
-      <nav className={styles.nav}>
-        <NavLink to="/" className={({ isActive }) => (isActive ? styles.active : '')}>Main</NavLink>
-        <NavLink to="/form-uncontrolled" className={({ isActive }) => (isActive ? styles.active : '')}>Uncontrolled Form</NavLink>
-        <NavLink to="/form-controlled" className={({ isActive }) => (isActive ? styles.active : '')}>Controlled Form</NavLink>
-      </nav>
+      <Navigation />
       <Routes>
-        <Route path="/" element={<div className={styles.mainPage}>Main Page</div>} />
+        <Route path="/" element={<Main />} />
         <Route path="/form-uncontrolled" element={<UncontrolledForm />} />
         <Route path="/form-controlled" element={<ControlledForm />} />
       </Routes>
