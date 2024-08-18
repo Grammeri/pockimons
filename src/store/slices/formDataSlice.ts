@@ -1,16 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface FormData {
-  name: string;
-}
-
-interface FormState {
-  controlledForm: FormData | null;
-}
-
-const initialState: FormState = {
-  controlledForm: null,
-};
+import { FormData, initialState } from '../../interfaces/interfaces';
 
 const formDataSlice = createSlice({
   name: 'formData',
@@ -19,9 +8,12 @@ const formDataSlice = createSlice({
     saveControlledFormData: (state, action: PayloadAction<FormData>) => {
       state.controlledForm = action.payload;
     },
+    saveUncontrolledFormData: (state, action: PayloadAction<FormData>) => {
+      state.uncontrolledForm = action.payload;
+    },
   },
 });
 
-export const { saveControlledFormData } = formDataSlice.actions;
+export const { saveControlledFormData, saveUncontrolledFormData } = formDataSlice.actions;
 
 export default formDataSlice.reducer;

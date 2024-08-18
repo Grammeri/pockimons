@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import ControlledForm from './components/controlled-form/ControlledForm';
 import Main from './components/main/Main';
 import styles from './App.module.scss';
+import UncontrolledForm from './components/uncontrolled-form/UncontrolledForm';
 
 const Navigation = () => {
   const location = useLocation();
@@ -22,7 +23,7 @@ const App = () => {
       <Navigation />
       <Routes>
         <Route path="/" element={<Main />} />
-       {/* <Route path="/form-uncontrolled" element={<UncontrolledForm />} />*/}
+        <Route path="/form-uncontrolled" element={<UncontrolledForm />} />
         <Route path="/form-controlled" element={<ControlledForm />} />
       </Routes>
     </Router>

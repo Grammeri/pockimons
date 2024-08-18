@@ -25,6 +25,8 @@ export const controlledFormSchema = yup.object().shape({
     .required('Confirm Password is required'),
   gender: yup.string().required('Gender is required'),
   acceptTerms: yup.bool().oneOf([true], 'You must accept the terms and conditions'),
-  picture: yup.mixed().required('Picture is required'),
+  picture: yup.mixed()
+    .test('fileSize', 'Picture is required and must be a valid image', value => value && value.length > 0)
+    .required('Picture is required'),
   country: yup.string().required('Country is required'),
 });

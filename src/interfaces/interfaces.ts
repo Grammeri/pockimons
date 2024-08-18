@@ -10,3 +10,12 @@ export interface FormData {
   country: string;
 }
 
+export interface FormState {
+  controlledForm: FormData | null;
+  uncontrolledForm: FormData | null;
+}
+
+export const initialState: FormState = {
+  controlledForm: null,
+  uncontrolledForm: null,
+};
