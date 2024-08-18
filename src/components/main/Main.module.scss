@@ -1,0 +1,66 @@
+.mainContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.formData {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 5px;
+
+  &.highlight {
+    border: 2px solid red;
+  }
+}
+
+.formData h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+.formData p {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #555;
+}
+
+li strong {
+  color: #000;
+  margin-right: 5px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+p {
+  font-size: 1rem;
+  color: #777;
+  text-align: center;
+}
