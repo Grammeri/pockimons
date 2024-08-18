@@ -20,6 +20,10 @@ h1 {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 5px;
+
+  &.highlight {
+    border: 2px solid red;
+  }
 }
 
 .formData h2 {

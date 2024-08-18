@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import styles from './Main.module.scss';
@@ -6,13 +6,28 @@ import styles from './Main.module.scss';
 const Main: React.FC = () => {
   const controlledFormData = useSelector((state: RootState) => state.formData.controlledForm);
   const uncontrolledFormData = useSelector((state: RootState) => state.formData.uncontrolledForm);
+  const [highlightedForm, setHighlightedForm] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (controlledFormData) {
+      setHighlightedForm('controlled');
+    } else if (uncontrolledFormData) {
+      setHighlightedForm('uncontrolled');
+    }
+
+    const timer = setTimeout(() => {
+      setHighlightedForm(null);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [controlledFormData, uncontrolledFormData]);
 
   return (
     <div className={styles.mainContainer}>
       <h1>Main Page</h1>
 
       {controlledFormData ? (
-        <div className={styles.formData}>
+        <div className={`${styles.formData} ${highlightedForm === 'controlled' ? styles.highlight : ''}`}>
           <h2>Controlled Form Data</h2>
           <ul>
             {Object.entries(controlledFormData).map(([key, value]) => (
@@ -31,7 +46,7 @@ const Main: React.FC = () => {
       )}
 
       {uncontrolledFormData ? (
-        <div className={styles.formData}>
+        <div className={`${styles.formData} ${highlightedForm === 'uncontrolled' ? styles.highlight : ''}`}>
           <h2>Uncontrolled Form Data</h2>
           <ul>
             {Object.entries(uncontrolledFormData).map(([key, value]) => (
