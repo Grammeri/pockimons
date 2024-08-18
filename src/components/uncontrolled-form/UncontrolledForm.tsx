@@ -5,13 +5,15 @@ import { saveUncontrolledFormData } from '../../store/slices/formDataSlice';
 import styles from '../controlled-form/ControlledForm.module.scss';
 import { RootState } from '../../store/store';
 import { FormData } from '../../interfaces/interfaces.ts';
-import { controlledFormSchema } from '../../validations/formSchemas'; // Импорт схемы валидации
+import { controlledFormSchema } from '../../validations/formSchemas';
 import * as yup from 'yup';
 
 const UncontrolledForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const countries = useSelector((state: RootState) => state.countries.countries);
+  const countries = useSelector(
+    (state: RootState) => state.countries.countries
+  );
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -24,25 +26,6 @@ const UncontrolledForm: React.FC = () => {
   const acceptTermsRef = useRef<HTMLInputElement | null>(null);
   const pictureRef = useRef<HTMLInputElement | null>(null);
   const countryRef = useRef<HTMLInputElement | null>(null);
-
-  const validateFormData = async (formData: FormData) => {
-    try {
-      await controlledFormSchema.validate(formData, { abortEarly: false });
-      setErrors({});
-      return true;
-    } catch (validationErrors) {
-      const validationErrorsObj: { [key: string]: string } = {};
-      if (validationErrors instanceof yup.ValidationError) {
-        validationErrors.inner.forEach((error) => {
-          if (error.path) {
-            validationErrorsObj[error.path] = error.message;
-          }
-        });
-      }
-      setErrors(validationErrorsObj);
-      return false;
-    }
-  };
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -62,14 +45,15 @@ const UncontrolledForm: React.FC = () => {
     const validationErrorsObj: { [key: string]: string } = {};
 
     if (!/^[A-Za-z0-9!@#$%^&*]+$/.test(formData.password)) {
-      validationErrorsObj.password = 'Password can only contain Latin letters, numbers, and special characters';
+      validationErrorsObj.password =
+        'Password can only contain Latin letters, numbers, and special characters';
     }
 
     try {
       await controlledFormSchema.validate(formData, { abortEarly: false });
     } catch (validationErrors) {
       if (validationErrors instanceof yup.ValidationError) {
-        validationErrors.inner.forEach((error) => {
+        validationErrors.inner.forEach(error => {
           if (error.path && !validationErrorsObj[error.path]) {
             validationErrorsObj[error.path] = error.message;
           }
@@ -84,7 +68,6 @@ const UncontrolledForm: React.FC = () => {
       setErrors({});
     }
 
-    // Если данные валидны, продолжаем обработку
     if (formData.picture && formData.picture.length > 0) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -120,13 +103,27 @@ const UncontrolledForm: React.FC = () => {
         </div>
         <div>
           <label htmlFor="password">Password</label>
-          <input ref={passwordRef} id="password" name="password" type="password" />
-          {errors.password && <p className={styles.errorText}>{errors.password}</p>}
+          <input
+            ref={passwordRef}
+            id="password"
+            name="password"
+            type="password"
+          />
+          {errors.password && (
+            <p className={styles.errorText}>{errors.password}</p>
+          )}
         </div>
         <div>
           <label htmlFor="confirmPassword">Confirm Password</label>
-          <input ref={confirmPasswordRef} id="confirmPassword" name="confirmPassword" type="password" />
-          {errors.confirmPassword && <p className={styles.errorText}>{errors.confirmPassword}</p>}
+          <input
+            ref={confirmPasswordRef}
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+          />
+          {errors.confirmPassword && (
+            <p className={styles.errorText}>{errors.confirmPassword}</p>
+          )}
         </div>
         <div>
           <label htmlFor="gender">Gender</label>
@@ -140,23 +137,39 @@ const UncontrolledForm: React.FC = () => {
         </div>
         <div>
           <label htmlFor="acceptTerms">Accept Terms & Conditions</label>
-          <input ref={acceptTermsRef} id="acceptTerms" name="acceptTerms" type="checkbox" />
-          {errors.acceptTerms && <p className={styles.errorText}>{errors.acceptTerms}</p>}
+          <input
+            ref={acceptTermsRef}
+            id="acceptTerms"
+            name="acceptTerms"
+            type="checkbox"
+          />
+          {errors.acceptTerms && (
+            <p className={styles.errorText}>{errors.acceptTerms}</p>
+          )}
         </div>
         <div>
           <label htmlFor="picture">Upload Picture</label>
           <input ref={pictureRef} id="picture" name="picture" type="file" />
-          {errors.picture && <p className={styles.errorText}>{errors.picture}</p>}
+          {errors.picture && (
+            <p className={styles.errorText}>{errors.picture}</p>
+          )}
         </div>
         <div>
           <label htmlFor="country">Country</label>
-          <input ref={countryRef} id="country" name="country" list="countries" />
+          <input
+            ref={countryRef}
+            id="country"
+            name="country"
+            list="countries"
+          />
           <datalist id="countries">
-            {countries.map((country) => (
+            {countries.map(country => (
               <option key={country} value={country} />
             ))}
           </datalist>
-          {errors.country && <p className={styles.errorText}>{errors.country}</p>}
+          {errors.country && (
+            <p className={styles.errorText}>{errors.country}</p>
+          )}
         </div>
         <button type="submit">Submit</button>
       </form>

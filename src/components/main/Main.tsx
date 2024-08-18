@@ -4,15 +4,32 @@ import { RootState } from '../../store/store';
 import styles from './Main.module.scss';
 
 const Main: React.FC = () => {
-  const controlledFormData = useSelector((state: RootState) => state.formData.controlledForm);
-  const uncontrolledFormData = useSelector((state: RootState) => state.formData.uncontrolledForm);
+  const controlledFormData = useSelector(
+    (state: RootState) => state.formData.controlledForm
+  );
+  const uncontrolledFormData = useSelector(
+    (state: RootState) => state.formData.uncontrolledForm
+  );
   const [highlightedForm, setHighlightedForm] = useState<string | null>(null);
 
   useEffect(() => {
-    if (controlledFormData) {
+    if (controlledFormData && !uncontrolledFormData) {
       setHighlightedForm('controlled');
-    } else if (uncontrolledFormData) {
+    } else if (uncontrolledFormData && !controlledFormData) {
       setHighlightedForm('uncontrolled');
+    } else if (controlledFormData && uncontrolledFormData) {
+      const controlledTimestamp = new Date(
+        controlledFormData.timestamp
+      ).getTime();
+      const uncontrolledTimestamp = new Date(
+        uncontrolledFormData.timestamp
+      ).getTime();
+
+      if (controlledTimestamp > uncontrolledTimestamp) {
+        setHighlightedForm('controlled');
+      } else {
+        setHighlightedForm('uncontrolled');
+      }
     }
 
     const timer = setTimeout(() => {
@@ -27,16 +44,26 @@ const Main: React.FC = () => {
       <h1>Main Page</h1>
 
       {controlledFormData ? (
-        <div className={`${styles.formData} ${highlightedForm === 'controlled' ? styles.highlight : ''}`}>
+        <div
+          className={`${styles.formData} ${highlightedForm === 'controlled' ? styles.highlight : ''}`}
+        >
           <h2>Controlled Form Data</h2>
           <ul>
             {Object.entries(controlledFormData).map(([key, value]) => (
               <li key={key}>
                 <strong>{key}:</strong>
-                {typeof value === 'boolean' ? (value ? 'Yes' : 'No') :
-                  typeof value === 'string' && value.startsWith('data:image') ? (
+                {typeof value === 'boolean' ? (
+                  value ? (
+                    'Yes'
+                  ) : (
+                    'No'
+                  )
+                ) : typeof value === 'string' &&
+                  value.startsWith('data:image') ? (
                     <img src={value} alt="Uploaded" width="100" />
-                  ) : value}
+                  ) : (
+                    value
+                  )}
               </li>
             ))}
           </ul>
@@ -46,16 +73,26 @@ const Main: React.FC = () => {
       )}
 
       {uncontrolledFormData ? (
-        <div className={`${styles.formData} ${highlightedForm === 'uncontrolled' ? styles.highlight : ''}`}>
+        <div
+          className={`${styles.formData} ${highlightedForm === 'uncontrolled' ? styles.highlight : ''}`}
+        >
           <h2>Uncontrolled Form Data</h2>
           <ul>
             {Object.entries(uncontrolledFormData).map(([key, value]) => (
               <li key={key}>
                 <strong>{key}:</strong>
-                {typeof value === 'boolean' ? (value ? 'Yes' : 'No') :
-                  typeof value === 'string' && value.startsWith('data:image') ? (
+                {typeof value === 'boolean' ? (
+                  value ? (
+                    'Yes'
+                  ) : (
+                    'No'
+                  )
+                ) : typeof value === 'string' &&
+                  value.startsWith('data:image') ? (
                     <img src={value} alt="Uploaded" width="100" />
-                  ) : value}
+                  ) : (
+                    value
+                  )}
               </li>
             ))}
           </ul>

@@ -14,6 +14,7 @@ const formDataSlice = createSlice({
   },
 });
 
-export const { saveControlledFormData, saveUncontrolledFormData } = formDataSlice.actions;
+export const { saveControlledFormData, saveUncontrolledFormData } =
+  formDataSlice.actions;
 
 export default formDataSlice.reducer;

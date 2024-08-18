@@ -12,9 +12,16 @@ import { FormData } from '../../interfaces/interfaces.ts';
 const ControlledForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const countries = useSelector((state: RootState) => state.countries.countries);
+  const countries = useSelector(
+    (state: RootState) => state.countries.countries
+  );
 
-  const { control, handleSubmit, formState: { errors }, setValue } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
     resolver: yupResolver(controlledFormSchema),
     mode: 'onChange',
     defaultValues: {
@@ -26,28 +33,29 @@ const ControlledForm: React.FC = () => {
       gender: '',
       acceptTerms: false,
       picture: undefined,
-      country: ''
-    }
+      country: '',
+    },
   });
-
   const onSubmit = (data: FormData) => {
+    const timestamp = new Date().toISOString();
+
     if (data.picture && data.picture.length > 0) {
       const reader = new FileReader();
       reader.onloadend = () => {
         const formDataWithBase64Picture = {
           ...data,
-          picture: reader.result as string, // конвертируем изображение в base64
+          picture: reader.result as string,
+          timestamp,
         };
         dispatch(saveControlledFormData(formDataWithBase64Picture));
         navigate('/');
       };
       reader.readAsDataURL(data.picture[0]);
     } else {
-      dispatch(saveControlledFormData(data));
+      dispatch(saveControlledFormData({ ...data, timestamp }));
       navigate('/');
     }
   };
-
   return (
     <div className={styles.formContainer}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -123,7 +131,7 @@ const ControlledForm: React.FC = () => {
                 type="checkbox"
                 {...field}
                 checked={field.value || false}
-                onChange={(e) => field.onChange(e.target.checked)}
+                onChange={e => field.onChange(e.target.checked)}
               />
             )}
           />
@@ -137,7 +145,7 @@ const ControlledForm: React.FC = () => {
             render={({ field }) => (
               <input
                 type="file"
-                onChange={(e) => {
+                onChange={e => {
                   if (e.target.files && e.target.files.length > 0) {
                     setValue('picture', e.target.files);
                     field.onChange(e.target.files);
@@ -153,15 +161,10 @@ const ControlledForm: React.FC = () => {
           <Controller
             name="country"
             control={control}
-            render={({ field }) => (
-              <input
-                list="countries"
-                {...field}
-              />
-            )}
+            render={({ field }) => <input list="countries" {...field} />}
           />
           <datalist id="countries">
-            {countries.map((country) => (
+            {countries.map(country => (
               <option key={country} value={country} />
             ))}
           </datalist>
