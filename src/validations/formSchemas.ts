@@ -3,11 +3,11 @@ import * as yup from 'yup';
 export const controlledFormSchema = yup.object().shape({
   name: yup
     .string()
+    .required('Name is required')
     .matches(
       /^[A-Z][a-zA-Z\s]*$/,
       'Name must start with an uppercase letter and contain only Latin letters'
-    )
-    .required('Name is required'),
+    ),
   age: yup
     .number()
     .positive('Age must be a positive number')
@@ -36,7 +36,7 @@ export const controlledFormSchema = yup.object().shape({
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password')], 'Passwords must match')
-    .required('Confirm Password is required'),
+    .required('Please confirm password'),
   gender: yup.string().required('Gender is required'),
   acceptTerms: yup
     .bool()

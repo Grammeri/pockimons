@@ -16,6 +16,7 @@ const UncontrolledForm: React.FC = () => {
   );
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const nameRef = useRef<HTMLInputElement | null>(null);
   const ageRef = useRef<HTMLInputElement | null>(null);
@@ -29,6 +30,7 @@ const UncontrolledForm: React.FC = () => {
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setIsSubmitted(true);
 
     const formData: FormData = {
       name: nameRef.current?.value || '',
@@ -89,17 +91,26 @@ const UncontrolledForm: React.FC = () => {
         <div>
           <label htmlFor="name">Name</label>
           <input ref={nameRef} id="name" name="name" type="text" />
-          {errors.name && <p className={styles.errorText}>{errors.name}</p>}
+          {errors.name && nameRef.current?.value && (
+            <p className={styles.errorText}>{errors.name}</p>
+          )}
+          {!nameRef.current?.value && isSubmitted && <p>Name is required</p>}
         </div>
         <div>
           <label htmlFor="age">Age</label>
           <input ref={ageRef} id="age" name="age" type="number" />
-          {errors.age && <p className={styles.errorText}>{errors.age}</p>}
+          {errors.age && ageRef.current?.value && (
+            <p className={styles.errorText}>{errors.age}</p>
+          )}
+          {!ageRef.current?.value && isSubmitted && <p>Age is required</p>}
         </div>
         <div>
           <label htmlFor="email">Email</label>
           <input ref={emailRef} id="email" name="email" type="email" />
-          {errors.email && <p className={styles.errorText}>{errors.email}</p>}
+          {errors.email && emailRef.current?.value && (
+            <p className={styles.errorText}>{errors.email}</p>
+          )}
+          {!emailRef.current?.value && isSubmitted && <p>Email is required</p>}
         </div>
         <div>
           <label htmlFor="password">Password</label>
@@ -109,8 +120,11 @@ const UncontrolledForm: React.FC = () => {
             name="password"
             type="password"
           />
-          {errors.password && (
+          {errors.password && passwordRef.current?.value && (
             <p className={styles.errorText}>{errors.password}</p>
+          )}
+          {!passwordRef.current?.value && isSubmitted && (
+            <p>Password is required</p>
           )}
         </div>
         <div>
@@ -121,8 +135,11 @@ const UncontrolledForm: React.FC = () => {
             name="confirmPassword"
             type="password"
           />
-          {errors.confirmPassword && (
+          {errors.confirmPassword && confirmPasswordRef.current?.value && (
             <p className={styles.errorText}>{errors.confirmPassword}</p>
+          )}
+          {!confirmPasswordRef.current?.value && isSubmitted && (
+            <p>Please confirm password</p>
           )}
         </div>
         <div>
@@ -133,7 +150,10 @@ const UncontrolledForm: React.FC = () => {
             <option value="female">Female</option>
             <option value="other">Other</option>
           </select>
-          {errors.gender && <p className={styles.errorText}>{errors.gender}</p>}
+          {errors.gender && genderRef.current?.value && (
+            <p className={styles.errorText}>{errors.gender}</p>
+          )}
+          {!genderRef.current?.value && isSubmitted && <p>Required</p>}
         </div>
         <div>
           <label htmlFor="acceptTerms">Accept Terms & Conditions</label>
@@ -143,16 +163,18 @@ const UncontrolledForm: React.FC = () => {
             name="acceptTerms"
             type="checkbox"
           />
-          {errors.acceptTerms && (
+          {errors.acceptTerms && acceptTermsRef.current?.checked && (
             <p className={styles.errorText}>{errors.acceptTerms}</p>
           )}
+          {!acceptTermsRef.current?.checked && isSubmitted && <p>Required</p>}
         </div>
         <div>
           <label htmlFor="picture">Upload Picture</label>
           <input ref={pictureRef} id="picture" name="picture" type="file" />
-          {errors.picture && (
+          {errors.picture && pictureRef.current?.value && (
             <p className={styles.errorText}>{errors.picture}</p>
           )}
+          {!pictureRef.current?.value && isSubmitted && <p>Required</p>}
         </div>
         <div>
           <label htmlFor="country">Country</label>
@@ -167,9 +189,10 @@ const UncontrolledForm: React.FC = () => {
               <option key={country} value={country} />
             ))}
           </datalist>
-          {errors.country && (
+          {errors.country && countryRef.current?.value && (
             <p className={styles.errorText}>{errors.country}</p>
           )}
+          {!countryRef.current?.value && isSubmitted && <p>Required</p>}
         </div>
         <button type="submit">Submit</button>
       </form>

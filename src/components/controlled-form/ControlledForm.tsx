@@ -19,7 +19,7 @@ const ControlledForm: React.FC = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, touchedFields, isSubmitted },
     setValue,
   } = useForm({
     resolver: yupResolver(controlledFormSchema),
@@ -36,6 +36,7 @@ const ControlledForm: React.FC = () => {
       country: '',
     },
   });
+
   const onSubmit = (data: FormData) => {
     const timestamp = new Date().toISOString();
 
@@ -56,10 +57,12 @@ const ControlledForm: React.FC = () => {
       navigate('/');
     }
   };
+
   return (
     <div className={styles.formContainer}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <h1>Controlled Form</h1>
+
         <div>
           <label htmlFor="name">Name</label>
           <Controller
@@ -67,8 +70,10 @@ const ControlledForm: React.FC = () => {
             control={control}
             render={({ field }) => <input {...field} />}
           />
-          {errors.name && <p>{errors.name.message}</p>}
+          {errors.name && touchedFields.name && <p>{errors.name.message}</p>}
+          {!touchedFields.name && isSubmitted && <p>Name is required</p>}
         </div>
+
         <div>
           <label htmlFor="age">Age</label>
           <Controller
@@ -76,8 +81,10 @@ const ControlledForm: React.FC = () => {
             control={control}
             render={({ field }) => <input type="number" {...field} />}
           />
-          {errors.age && <p>{errors.age.message}</p>}
+          {errors.age && touchedFields.age && <p>{errors.age.message}</p>}
+          {!touchedFields.age && isSubmitted && <p>Age is required</p>}
         </div>
+
         <div>
           <label htmlFor="email">Email</label>
           <Controller
@@ -85,8 +92,10 @@ const ControlledForm: React.FC = () => {
             control={control}
             render={({ field }) => <input type="email" {...field} />}
           />
-          {errors.email && <p>{errors.email.message}</p>}
+          {errors.email && touchedFields.email && <p>{errors.email.message}</p>}
+          {!touchedFields.email && isSubmitted && <p>Email is required</p>}
         </div>
+
         <div>
           <label htmlFor="password">Password</label>
           <Controller
@@ -94,8 +103,14 @@ const ControlledForm: React.FC = () => {
             control={control}
             render={({ field }) => <input type="password" {...field} />}
           />
-          {errors.password && <p>{errors.password.message}</p>}
+          {errors.password && touchedFields.password && (
+            <p>{errors.password.message}</p>
+          )}
+          {!touchedFields.password && isSubmitted && (
+            <p>Password is required</p>
+          )}
         </div>
+
         <div>
           <label htmlFor="confirmPassword">Confirm Password</label>
           <Controller
@@ -103,8 +118,14 @@ const ControlledForm: React.FC = () => {
             control={control}
             render={({ field }) => <input type="password" {...field} />}
           />
-          {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+          {errors.confirmPassword && touchedFields.confirmPassword && (
+            <p>{errors.confirmPassword.message}</p>
+          )}
+          {!touchedFields.confirmPassword && isSubmitted && (
+            <p>Please confirm password</p>
+          )}
         </div>
+
         <div>
           <label htmlFor="gender">Gender</label>
           <Controller
@@ -119,8 +140,12 @@ const ControlledForm: React.FC = () => {
               </select>
             )}
           />
-          {errors.gender && <p>{errors.gender.message}</p>}
+          {errors.gender && touchedFields.gender && (
+            <p>{errors.gender.message}</p>
+          )}
+          {!touchedFields.gender && isSubmitted && <p>Required</p>}
         </div>
+
         <div>
           <label htmlFor="acceptTerms">Accept Terms & Conditions</label>
           <Controller
@@ -135,8 +160,12 @@ const ControlledForm: React.FC = () => {
               />
             )}
           />
-          {errors.acceptTerms && <p>{errors.acceptTerms.message}</p>}
+          {errors.acceptTerms && touchedFields.acceptTerms && (
+            <p>{errors.acceptTerms.message}</p>
+          )}
+          {!touchedFields.acceptTerms && isSubmitted && <p>Required</p>}
         </div>
+
         <div>
           <label htmlFor="picture">Upload Picture</label>
           <Controller
@@ -154,8 +183,12 @@ const ControlledForm: React.FC = () => {
               />
             )}
           />
-          {errors.picture && <p>{errors.picture.message}</p>}
+          {errors.picture && touchedFields.picture && (
+            <p>{errors.picture.message}</p>
+          )}
+          {!touchedFields.picture && isSubmitted && <p>Required</p>}
         </div>
+
         <div>
           <label htmlFor="country">Country</label>
           <Controller
@@ -168,8 +201,12 @@ const ControlledForm: React.FC = () => {
               <option key={country} value={country} />
             ))}
           </datalist>
-          {errors.country && <p>{errors.country.message}</p>}
+          {errors.country && touchedFields.country && (
+            <p>{errors.country.message}</p>
+          )}
+          {!touchedFields.country && isSubmitted && <p>Required</p>}
         </div>
+
         <button type="submit">Submit</button>
       </form>
     </div>
