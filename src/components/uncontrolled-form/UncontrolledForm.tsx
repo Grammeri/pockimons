@@ -11,7 +11,9 @@ import * as yup from 'yup';
 const UncontrolledForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const countries = useSelector((state: RootState) => state.countries.countries);
+  const countries = useSelector(
+    (state: RootState) => state.countries.countries
+  );
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -28,11 +30,16 @@ const UncontrolledForm: React.FC = () => {
   const pictureRef = useRef<HTMLInputElement | null>(null);
   const countryRef = useRef<HTMLInputElement | null>(null);
 
-  const validateFileSize = (file: FileList | null) => {
+  const validateFileSizeAndType = (file: FileList | null) => {
     if (file && file.length > 0) {
       const selectedFile = file[0];
+      const validTypes = ['image/jpeg', 'image/png'];
+
       if (selectedFile.size > 10 * 1024 * 1024) {
         setFileError('Must be under 10 Mb!');
+        setIsFileValid(false);
+      } else if (!validTypes.includes(selectedFile.type)) {
+        setFileError('Only jpeg and png files are allowed!');
         setIsFileValid(false);
       } else {
         setFileError(null);
@@ -60,7 +67,7 @@ const UncontrolledForm: React.FC = () => {
       country: countryRef.current?.value || '',
     };
 
-    validateFileSize(formData.picture);
+    validateFileSizeAndType(formData.picture);
 
     const validationErrorsObj: { [key: string]: string } = {};
 
@@ -195,7 +202,7 @@ const UncontrolledForm: React.FC = () => {
             id="picture"
             name="picture"
             type="file"
-            onChange={() => validateFileSize(pictureRef.current?.files || null)}
+            onChange={() => validateFileSizeAndType(pictureRef.current?.files || null)}
           />
           {errors.picture && pictureRef.current?.value && (
             <p className={styles.errorText}>{errors.picture}</p>

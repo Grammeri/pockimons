@@ -12,7 +12,9 @@ import { FormData } from '../../interfaces/interfaces.ts';
 const ControlledForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const countries = useSelector((state: RootState) => state.countries.countries);
+  const countries = useSelector(
+    (state: RootState) => state.countries.countries
+  );
   const [fileError, setFileError] = useState<string | null>(null);
   const [isFileValid, setIsFileValid] = useState<boolean>(true);
 
@@ -40,10 +42,15 @@ const ControlledForm: React.FC = () => {
 
   const watchedPicture = watch('picture');
 
-  const validateFileSize = (file: FileList | null) => {
+  const validateFileSizeAndType = (file: FileList | null) => {
     if (file && file.length > 0) {
       const selectedFile = file[0];
-      if (selectedFile.size > 10 * 1024 * 1024) {
+      const validFileTypes = ['image/jpeg', 'image/png'];
+
+      if (!validFileTypes.includes(selectedFile.type)) {
+        setFileError('Only jpeg and png files are allowed');
+        setIsFileValid(false);
+      } else if (selectedFile.size > 10 * 1024 * 1024) {
         setFileError('Must be under 10 Mb!');
         setIsFileValid(false);
       } else {
@@ -57,7 +64,7 @@ const ControlledForm: React.FC = () => {
   };
 
   useEffect(() => {
-    validateFileSize(watchedPicture);
+    validateFileSizeAndType(watchedPicture);
   }, [watchedPicture]);
 
   const onSubmit = (data: FormData) => {
