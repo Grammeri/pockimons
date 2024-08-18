@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,15 +12,16 @@ import { FormData } from '../../interfaces/interfaces.ts';
 const ControlledForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const countries = useSelector(
-    (state: RootState) => state.countries.countries
-  );
+  const countries = useSelector((state: RootState) => state.countries.countries);
+  const [fileError, setFileError] = useState<string | null>(null);
+  const [isFileValid, setIsFileValid] = useState<boolean>(true);
 
   const {
     control,
     handleSubmit,
-    formState: { errors, touchedFields, isSubmitted },
+    formState: { errors, isSubmitted },
     setValue,
+    watch,
   } = useForm({
     resolver: yupResolver(controlledFormSchema),
     mode: 'onChange',
@@ -37,7 +38,31 @@ const ControlledForm: React.FC = () => {
     },
   });
 
+  const watchedPicture = watch('picture');
+
+  const validateFileSize = (file: FileList | null) => {
+    if (file && file.length > 0) {
+      const selectedFile = file[0];
+      if (selectedFile.size > 10 * 1024 * 1024) {
+        setFileError('Must be under 10 Mb!');
+        setIsFileValid(false);
+      } else {
+        setFileError(null);
+        setIsFileValid(true);
+      }
+    } else {
+      setFileError(null);
+      setIsFileValid(true);
+    }
+  };
+
+  useEffect(() => {
+    validateFileSize(watchedPicture);
+  }, [watchedPicture]);
+
   const onSubmit = (data: FormData) => {
+    if (!isFileValid) return;
+
     const timestamp = new Date().toISOString();
 
     if (data.picture && data.picture.length > 0) {
@@ -70,8 +95,7 @@ const ControlledForm: React.FC = () => {
             control={control}
             render={({ field }) => <input {...field} />}
           />
-          {errors.name && touchedFields.name && <p>{errors.name.message}</p>}
-          {!touchedFields.name && isSubmitted && <p>Name is required</p>}
+          {errors.name && <p>{errors.name.message}</p>}
         </div>
 
         <div>
@@ -81,8 +105,7 @@ const ControlledForm: React.FC = () => {
             control={control}
             render={({ field }) => <input type="number" {...field} />}
           />
-          {errors.age && touchedFields.age && <p>{errors.age.message}</p>}
-          {!touchedFields.age && isSubmitted && <p>Age is required</p>}
+          {errors.age && <p>{errors.age.message}</p>}
         </div>
 
         <div>
@@ -92,8 +115,7 @@ const ControlledForm: React.FC = () => {
             control={control}
             render={({ field }) => <input type="email" {...field} />}
           />
-          {errors.email && touchedFields.email && <p>{errors.email.message}</p>}
-          {!touchedFields.email && isSubmitted && <p>Email is required</p>}
+          {errors.email && <p>{errors.email.message}</p>}
         </div>
 
         <div>
@@ -103,12 +125,7 @@ const ControlledForm: React.FC = () => {
             control={control}
             render={({ field }) => <input type="password" {...field} />}
           />
-          {errors.password && touchedFields.password && (
-            <p>{errors.password.message}</p>
-          )}
-          {!touchedFields.password && isSubmitted && (
-            <p>Password is required</p>
-          )}
+          {errors.password && <p>{errors.password.message}</p>}
         </div>
 
         <div>
@@ -118,12 +135,7 @@ const ControlledForm: React.FC = () => {
             control={control}
             render={({ field }) => <input type="password" {...field} />}
           />
-          {errors.confirmPassword && touchedFields.confirmPassword && (
-            <p>{errors.confirmPassword.message}</p>
-          )}
-          {!touchedFields.confirmPassword && isSubmitted && (
-            <p>Please confirm password</p>
-          )}
+          {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
         </div>
 
         <div>
@@ -140,10 +152,7 @@ const ControlledForm: React.FC = () => {
               </select>
             )}
           />
-          {errors.gender && touchedFields.gender && (
-            <p>{errors.gender.message}</p>
-          )}
-          {!touchedFields.gender && isSubmitted && <p>Required</p>}
+          {errors.gender && <p>{errors.gender.message}</p>}
         </div>
 
         <div>
@@ -160,10 +169,7 @@ const ControlledForm: React.FC = () => {
               />
             )}
           />
-          {errors.acceptTerms && touchedFields.acceptTerms && (
-            <p>{errors.acceptTerms.message}</p>
-          )}
-          {!touchedFields.acceptTerms && isSubmitted && <p>Required</p>}
+          {errors.acceptTerms && <p>{errors.acceptTerms.message}</p>}
         </div>
 
         <div>
@@ -183,10 +189,8 @@ const ControlledForm: React.FC = () => {
               />
             )}
           />
-          {errors.picture && touchedFields.picture && (
-            <p>{errors.picture.message}</p>
-          )}
-          {!touchedFields.picture && isSubmitted && <p>Required</p>}
+          {errors.picture && <p>{errors.picture.message}</p>}
+          {fileError && <p style={{ color: 'red' }}>{fileError}!</p>}
         </div>
 
         <div>
@@ -201,13 +205,12 @@ const ControlledForm: React.FC = () => {
               <option key={country} value={country} />
             ))}
           </datalist>
-          {errors.country && touchedFields.country && (
-            <p>{errors.country.message}</p>
-          )}
-          {!touchedFields.country && isSubmitted && <p>Required</p>}
+          {errors.country && <p>{errors.country.message}</p>}
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={!isFileValid}>
+          Submit
+        </button>
       </form>
     </div>
   );

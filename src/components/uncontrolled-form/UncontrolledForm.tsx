@@ -11,12 +11,12 @@ import * as yup from 'yup';
 const UncontrolledForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const countries = useSelector(
-    (state: RootState) => state.countries.countries
-  );
+  const countries = useSelector((state: RootState) => state.countries.countries);
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [fileError, setFileError] = useState<string | null>(null);
+  const [isFileValid, setIsFileValid] = useState<boolean>(true);
 
   const nameRef = useRef<HTMLInputElement | null>(null);
   const ageRef = useRef<HTMLInputElement | null>(null);
@@ -27,6 +27,22 @@ const UncontrolledForm: React.FC = () => {
   const acceptTermsRef = useRef<HTMLInputElement | null>(null);
   const pictureRef = useRef<HTMLInputElement | null>(null);
   const countryRef = useRef<HTMLInputElement | null>(null);
+
+  const validateFileSize = (file: FileList | null) => {
+    if (file && file.length > 0) {
+      const selectedFile = file[0];
+      if (selectedFile.size > 10 * 1024 * 1024) {
+        setFileError('Must be under 10 Mb!');
+        setIsFileValid(false);
+      } else {
+        setFileError(null);
+        setIsFileValid(true);
+      }
+    } else {
+      setFileError(null);
+      setIsFileValid(true);
+    }
+  };
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -43,6 +59,8 @@ const UncontrolledForm: React.FC = () => {
       picture: pictureRef.current?.files || null,
       country: countryRef.current?.value || '',
     };
+
+    validateFileSize(formData.picture);
 
     const validationErrorsObj: { [key: string]: string } = {};
 
@@ -63,7 +81,7 @@ const UncontrolledForm: React.FC = () => {
       }
     }
 
-    if (Object.keys(validationErrorsObj).length > 0) {
+    if (Object.keys(validationErrorsObj).length > 0 || !isFileValid) {
       setErrors(validationErrorsObj);
       return;
     } else {
@@ -172,20 +190,22 @@ const UncontrolledForm: React.FC = () => {
         </div>
         <div>
           <label htmlFor="picture">Upload Picture</label>
-          <input ref={pictureRef} id="picture" name="picture" type="file" />
+          <input
+            ref={pictureRef}
+            id="picture"
+            name="picture"
+            type="file"
+            onChange={() => validateFileSize(pictureRef.current?.files || null)}
+          />
           {errors.picture && pictureRef.current?.value && (
             <p className={styles.errorText}>{errors.picture}</p>
           )}
           {!pictureRef.current?.value && isSubmitted && <p>Required</p>}
+          {fileError && <p style={{ color: 'red' }}>{fileError}!</p>}
         </div>
         <div>
           <label htmlFor="country">Country</label>
-          <input
-            ref={countryRef}
-            id="country"
-            name="country"
-            list="countries"
-          />
+          <input ref={countryRef} id="country" name="country" list="countries" />
           <datalist id="countries">
             {countries.map(country => (
               <option key={country} value={country} />
@@ -196,7 +216,9 @@ const UncontrolledForm: React.FC = () => {
           )}
           {!countryRef.current?.value && isSubmitted && <p>Required</p>}
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={!isFileValid}>
+          Submit
+        </button>
       </form>
     </div>
   );
