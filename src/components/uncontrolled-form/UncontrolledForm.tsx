@@ -70,16 +70,18 @@ const UncontrolledForm: React.FC = () => {
       setErrors({});
     }
 
+    const timestamp = new Date().toISOString();
+
     if (formData.picture && formData.picture.length > 0) {
       const reader = new FileReader();
       reader.onloadend = () => {
         formData.picture = reader.result as string;
-        dispatch(saveUncontrolledFormData(formData));
+        dispatch(saveUncontrolledFormData({ ...formData, timestamp }));
         navigate('/');
       };
       reader.readAsDataURL(formData.picture[0]);
     } else {
-      dispatch(saveUncontrolledFormData(formData));
+      dispatch(saveUncontrolledFormData({ ...formData, timestamp }));
       navigate('/');
     }
   };

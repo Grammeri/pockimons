@@ -48,23 +48,26 @@ const Main: React.FC = () => {
           className={`${styles.formData} ${highlightedForm === 'controlled' ? styles.highlight : ''}`}
         >
           <h2>Controlled Form Data</h2>
+          <p><strong>Submitted at:</strong> {new Date(controlledFormData.timestamp).toLocaleString()}</p>
           <ul>
             {Object.entries(controlledFormData).map(([key, value]) => (
-              <li key={key}>
-                <strong>{key}:</strong>
-                {typeof value === 'boolean' ? (
-                  value ? (
-                    'Yes'
-                  ) : (
-                    'No'
-                  )
-                ) : typeof value === 'string' &&
+              key !== 'timestamp' && (
+                <li key={key}>
+                  <strong>{key}:</strong>
+                  {typeof value === 'boolean' ? (
+                    value ? (
+                      'Yes'
+                    ) : (
+                      'No'
+                    )
+                  ) : typeof value === 'string' &&
                   value.startsWith('data:image') ? (
-                    <img src={value} alt="Uploaded" width="100" />
-                  ) : (
-                    value
-                  )}
-              </li>
+                      <img src={value} alt="Uploaded" width="100" />
+                    ) : (
+                      value
+                    )}
+                </li>
+              )
             ))}
           </ul>
         </div>
@@ -77,23 +80,26 @@ const Main: React.FC = () => {
           className={`${styles.formData} ${highlightedForm === 'uncontrolled' ? styles.highlight : ''}`}
         >
           <h2>Uncontrolled Form Data</h2>
+          <p><strong>Submitted at:</strong> {new Date(uncontrolledFormData.timestamp).toLocaleString()}</p>
           <ul>
             {Object.entries(uncontrolledFormData).map(([key, value]) => (
-              <li key={key}>
-                <strong>{key}:</strong>
-                {typeof value === 'boolean' ? (
-                  value ? (
-                    'Yes'
-                  ) : (
-                    'No'
-                  )
-                ) : typeof value === 'string' &&
+              key !== 'timestamp' && (
+                <li key={key}>
+                  <strong>{key}:</strong>
+                  {typeof value === 'boolean' ? (
+                    value ? (
+                      'Yes'
+                    ) : (
+                      'No'
+                    )
+                  ) : typeof value === 'string' &&
                   value.startsWith('data:image') ? (
-                    <img src={value} alt="Uploaded" width="100" />
-                  ) : (
-                    value
-                  )}
-              </li>
+                      <img src={value} alt="Uploaded" width="100" />
+                    ) : (
+                      value
+                    )}
+                </li>
+              )
             ))}
           </ul>
         </div>
