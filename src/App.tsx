@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import UncontrolledForm from './components/uncontrolled-form/UncontrolledForm';
+// import UncontrolledForm from './components/uncontrolled-form/UncontrolledForm';
 import ControlledForm from './components/controlled-form/ControlledForm';
 import Main from './components/main/Main';
 import styles from './App.module.scss';
@@ -22,7 +22,7 @@ const App = () => {
       <Navigation />
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/form-uncontrolled" element={<UncontrolledForm />} />
+       {/* <Route path="/form-uncontrolled" element={<UncontrolledForm />} />*/}
         <Route path="/form-controlled" element={<ControlledForm />} />
       </Routes>
     </Router>

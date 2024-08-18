@@ -1,45 +1,93 @@
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-width: 400px;
+.form {
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
-label {
-  font-weight: bold;
-  margin-bottom: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  div {
+    margin-bottom: 15px;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      font-size: 1rem;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+    }
+
+    p {
+      color: #dc3545;
+      margin-top: 5px;
+      font-size: 0.875rem;
+    }
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
 }
 
-input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  width: 100%;
-}
+.table-container {
+  margin-top: 20px;
+  max-width: 100%;
+  overflow-x: auto;
 
-/* Error message styles */
-p {
-  color: red;
-  font-size: 14px;
-  margin: -10px 0 10px 0;
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
 
-/* Submit button styles */
-button[type="submit"] {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #dee2e6;
+    }
 
-button[type="submit"]:hover {
-  background-color: #45a049;
+    th {
+      background-color: #f1f1f1;
+      font-weight: bold;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
 }
